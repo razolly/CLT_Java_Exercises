@@ -2,6 +2,10 @@ package Assignment1;
 
 import java.util.Scanner;
 
+class User {
+	
+}
+
 public class Problem14_ATM {
 
 	/*
@@ -53,7 +57,7 @@ public class Problem14_ATM {
 		}
 
 		// Get password
-		System.out.print("\nEnter Password: ");
+		System.out.print("Enter Password: ");
 		String password = sc.next();
 
 		// Re-enter password
@@ -148,13 +152,13 @@ public class Problem14_ATM {
 	}
 
 	static void depositAmount() {
-		
+
 		// Get amount to deposit
 		System.out.print("\nEnter Amount: ");
 		Scanner sc = new Scanner(System.in);
 		int depositAmount = sc.nextInt();
-		
-		//while()
+
+		// while()
 	}
 
 	static void withdrawAmount() {
