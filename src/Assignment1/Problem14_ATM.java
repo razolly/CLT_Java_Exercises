@@ -84,7 +84,7 @@ public class Problem14_ATM {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\nEnter User ID: ");
 		String username = sc.next();
-		
+
 		// Get password
 		System.out.print("Enter password: ");
 		String password = sc.next();
@@ -93,29 +93,39 @@ public class Problem14_ATM {
 		while (!isUserDataValid(username, password)) {
 			System.out.print("\nEnter User ID: ");
 			username = sc.next();
-			
+
 			System.out.print("Enter password: ");
 			password = sc.next();
 		}
-		
+
 		System.out.println("\nLogin Successful!");
-		
-		// Display next menu
-		displayAccountOptions();
-		System.out.print("\nEnter your choice: ");
-		int userAccountChoice = sc.nextInt();
-		
-		switch(userAccountChoice) {
-			case 1: checkBalance();
+
+		int userAccountChoice;
+
+		// Display next menu. Loop until user quits (choice 4)
+		do {
+			displayAccountOptions();
+			System.out.print("\nEnter your choice: ");
+			userAccountChoice = sc.nextInt();
+
+			switch (userAccountChoice) {
+			case 1:
+				checkBalance();
 				break;
-			case 2: depositAmount();
+			case 2:
+				depositAmount();
 				break;
-			case 3: withdrawAmount();
+			case 3:
+				withdrawAmount();
 				break;
-			default: System.out.println("Invalid choice!");
+			case 4: // Exit menu
 				break;
-		}
-		
+			default:
+				System.out.println("Invalid choice!");
+				break;
+			}
+		} while (userAccountChoice != 4);
+
 	}
 
 	static void forgotPassword() {
@@ -125,24 +135,30 @@ public class Problem14_ATM {
 	static void logout() {
 		System.out.println("\nSystem shut down!");
 	}
-	
+
 	static void checkBalance() {
 		int balance = 0;
 		System.out.println("Available balance: " + balance);
 		System.out.println("Wish to continue? (y/n): ");
-		
+
 		Scanner sc = new Scanner(System.in);
-		if(sc.next().equals("y")) {
+		if (sc.next().equals("y")) {
 			// Do nothing
 		}
 	}
-	
+
 	static void depositAmount() {
 		
-	}
-	
-	static void withdrawAmount() {
+		// Get amount to deposit
+		System.out.print("\nEnter Amount: ");
+		Scanner sc = new Scanner(System.in);
+		int depositAmount = sc.nextInt();
 		
+		//while()
+	}
+
+	static void withdrawAmount() {
+
 	}
 
 	static boolean isEmailValid(String email) {
@@ -153,7 +169,7 @@ public class Problem14_ATM {
 			return true;
 		}
 	}
-	
+
 	static boolean isUserDataValid(String username, String password) {
 		return true;
 	}
@@ -163,9 +179,10 @@ public class Problem14_ATM {
 				"\nUser Home Page: " + "\n1. Register" + "\n2. Login" + "\n3. Forgot Password" + "\n4. Logout (exit)");
 		// System.out.print("\n\nEnter your choice: ");
 	}
-	
+
 	static void displayAccountOptions() {
-		System.out.println("\nType 1: Check Available Bank Balance\nType 2: Deposit Amount\nType 3: Withdraw Amount");
+		System.out.println(
+				"\nType 1: Check Available Bank Balance\nType 2: Deposit Amount\nType 3: Withdraw Amount\nType 4: Quit");
 	}
 
 }
