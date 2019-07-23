@@ -2,13 +2,16 @@ package Assignment1;
 
 public class Problem10 {
 
+	/* 
+	 * How to find common elements in three sorted arrays? 
+	 */
 	public static void main(String[] args) {
 
 		int[] input1 = new int[] { 1, 5, 10, 20, 40, 80 };
 		int[] input2 = new int[] { 6, 7, 20, 80, 100 };
 		int[] input3 = new int[] { 3, 4, 15, 20, 30, 70, 80, 120 };
 		
-		int curr;	// Hold the current number being searched for
+		int curr; // Hold the current number being searched for
 		
 		for(int i = 0; i < input1.length; i++) {
 			// Loop through elements of 1st array and search for
