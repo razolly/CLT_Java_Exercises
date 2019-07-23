@@ -1,16 +1,18 @@
 package Assignment1;
 
-public class Problem7 {
+public class Problem03 {
 
 	public static void main(String[] args) {
+		
+		char c = 'A';
 
 		for(int i = 0; i < 5; i++) {
-			for(int j = 0; j <= i * 2; j++) {
-				System.out.print(i + 1);
+			for(int j = 0; j <= i; j++) {
+				System.out.print(c);
 			}
 			System.out.println();
+			c += 1;
 		}
-		
 	}
 
 }
