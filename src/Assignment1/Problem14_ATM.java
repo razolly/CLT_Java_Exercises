@@ -82,14 +82,6 @@ class AccountInfo {
 		balance = 1000; // Set balance to $1000 by default
 	}
 
-	/*
-	 * Returns balance (basically a GET method) The calling method can print the
-	 * returned value
-	 */
-	public int checkAvailableBalance() {
-		return balance;
-	}
-
 	public void depositAmount(int amount) {
 		balance += amount;
 	}
@@ -99,16 +91,24 @@ class AccountInfo {
 	 * false if unable to withdraw due to insufficient value
 	 */
 	public boolean withdrawAmount(int amount) {
-		if (balance < amount) {
-			return false;
-		} else {
+		if (isWithdrawOk(amount)) {
 			balance -= amount;
 			return true;
+		} else {
+			return false;
 		}
 	}
 
 	public int getBalance() {
 		return balance;
+	}
+
+	public boolean isWithdrawOk(int amount) {
+		if (balance < amount) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
 
@@ -183,7 +183,7 @@ public class Problem14_ATM {
 		}
 
 		// Get favorite color
-		System.out.print("\nWhat is your favourite color? ");
+		System.out.print("What is your favourite color? ");
 		String favColor = sc.next();
 		System.out.println(favColor + " is your security key, in case you forget your password.");
 
@@ -242,7 +242,7 @@ public class Problem14_ATM {
 			case 3:
 				withdrawAmount(currUser);
 				break;
-			case 4: // Exit menu
+			case 4: System.out.println("\nThank you for banking with us!");
 				break;
 			default:
 				System.out.println("Invalid choice!");
@@ -278,37 +278,54 @@ public class Problem14_ATM {
 	static void checkBalance(User user) {
 
 		System.out.println("Available balance: $" + user.getAccountInfo().getBalance());
-		System.out.print("Wish to continue? (y/n): ");
-
-		Scanner sc = new Scanner(System.in);
-		if (sc.next().equals("y")) {
-			// Do nothing
-		}
+		
 	}
 
 	static void depositAmount(User user) {
 
 		// Get amount to deposit
-		System.out.print("\nEnter Amount: ");
+		System.out.print("\nEnter Amount: $");
 		Scanner sc = new Scanner(System.in);
 		int depositAmount = sc.nextInt();
 
 		// Loop until a positive amount is entered
 		while (depositAmount < 0) {
 			System.out.println("Amount can't be negative!");
-			System.out.print("\nEnter Amount: ");
+			System.out.print("\nEnter Amount: $");
 			depositAmount = sc.nextInt();
 		}
-		
+
 		// Deposit amount in user account
 		user.getAccountInfo().depositAmount(depositAmount);
 
 		System.out.println("$" + depositAmount + " deposited successfully!");
-		// System.out.print("\nWish to continue? (y/n): ");
 	}
 
-	static void withdrawAmount() {
-		// TODO do this method
+	static void withdrawAmount(User user) {
+
+		// Get amount to withdraw
+		System.out.print("\nEnter Amount: $");
+		Scanner sc = new Scanner(System.in);
+		int withdrawAmount = sc.nextInt();
+
+		// If the amount entered is negative or is more than the available balance,
+		// then ask the user to enter a new amount
+		while (withdrawAmount < 0 || !user.getAccountInfo().isWithdrawOk(withdrawAmount)) {
+			// Display error message 
+			if (withdrawAmount < 0) {
+				System.out.println("Amount can't be negative!");
+			} else if (!user.getAccountInfo().isWithdrawOk(withdrawAmount)) {
+				System.out.println("Sorry! Insufficient balance...");
+			}
+			System.out.print("\nEnter Amount: $");
+			withdrawAmount = sc.nextInt();
+		}
+
+		// Withdraw amount from user account
+		user.getAccountInfo().withdrawAmount(withdrawAmount);
+
+		System.out.println("$" + withdrawAmount + " withdrawn successfully!");
+
 	}
 
 	static boolean isEmailValid(ArrayList<User> listOfUser, String email) {
@@ -351,6 +368,7 @@ public class Problem14_ATM {
 	}
 
 	static void displayMenu() {
+		System.out.println();
 		System.out.println("-----------------------------------------------------");
 		System.out.println("------------------- ATM Options ---------------------");
 		System.out.println("-----------------------------------------------------");
@@ -360,6 +378,7 @@ public class Problem14_ATM {
 	}
 
 	static void displayAccountOptions() {
+		System.out.println();
 		System.out.println("--------------------------------------------------------");
 		System.out.println("------------------- Account Options --------------------");
 		System.out.println("--------------------------------------------------------");
