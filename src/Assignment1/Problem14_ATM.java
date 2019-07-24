@@ -159,19 +159,15 @@ public class Problem14_ATM {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\nEnter email address: ");
 		String email = sc.next();
-
-		// TODO fix this
-		// If users exist in database, then validate the email 
-		if (!listOfUser.isEmpty()) {
-			// Check if email already exists
-			while (!isEmailValid(listOfUser, email)) {
-				// Display error message
-				System.out.println("\nEmail already exists!");
-				System.out.print("\nEnter email address: ");
-				email = sc.next();
-			}
+		
+		// Ensure email does not exist, before registering
+		while (isEmailExisting(listOfUser, email)) {
+			// Display error message
+			System.out.println("\nEmail already exists!");
+			System.out.print("\nEnter email address: ");
+			email = sc.next();
 		}
-
+		
 		// Get password
 		System.out.print("Enter Password: ");
 		String password = sc.next();
@@ -266,7 +262,7 @@ public class Problem14_ATM {
 		String username = sc.next();
 
 		// Check if username exists. If not, loop
-		while (!isEmailValid(listOfUser, username)) {
+		while (!isEmailExisting(listOfUser, username)) {
 			System.out.println("\nUser does not exist!");
 			System.out.print("\nEnter User ID: ");
 			username = sc.next();
@@ -318,8 +314,6 @@ public class Problem14_ATM {
 
 		// Display success message
 		System.out.println("\nYour password has been reset succesfully!");
-
-		// TODO check if this method is working properly
 	}
 
 	static void logout() {
@@ -394,9 +388,11 @@ public class Problem14_ATM {
 
 	}
 
-	static boolean isEmailValid(ArrayList<User> listOfUser, String email) {
+	/* 
+	 * Checks if email exists within a list of users 
+	 */
+	static boolean isEmailExisting(ArrayList<User> listOfUser, String email) {
 
-		// Check if email exists within list of users
 		for (User user : listOfUser) {
 			if (user.getCredential().getEmail().equals(email)) {
 				return true;
