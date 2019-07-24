@@ -71,7 +71,6 @@ class Credentials {
 		this.favouriteColor = favouriteColor;
 	}
 
-	// TODO method for resetting password (requires favourite color)
 }
 
 class AccountInfo {
@@ -138,7 +137,7 @@ public class Problem14_ATM {
 				login(listOfUser);
 				break;
 			case 3:
-				forgotPassword();
+				forgotPassword(listOfUser);
 				break;
 			case 4:
 				logout();
@@ -154,17 +153,23 @@ public class Problem14_ATM {
 
 	}
 
-	static void register(ArrayList<User> lisfOfUser) {
+	static void register(ArrayList<User> listOfUser) {
 
 		// Get email address
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\nEnter email address: ");
 		String email = sc.next();
 
-		// Check if email already exists
-		while (!isEmailValid(lisfOfUser, email)) {
-			System.out.print("\nEnter email address: ");
-			email = sc.next();
+		// TODO fix this
+		// If users exist in database, then validate the email 
+		if (!listOfUser.isEmpty()) {
+			// Check if email already exists
+			while (!isEmailValid(listOfUser, email)) {
+				// Display error message
+				System.out.println("\nEmail already exists!");
+				System.out.print("\nEnter email address: ");
+				email = sc.next();
+			}
 		}
 
 		// Get password
@@ -192,7 +197,7 @@ public class Problem14_ATM {
 		newUser.getCredential().setEmail(email);
 		newUser.getCredential().setPassword(password);
 		newUser.getCredential().setFavouriteColor(favColor);
-		lisfOfUser.add(newUser);
+		listOfUser.add(newUser);
 
 		// Display success message
 		System.out.println("\nRegistration Successful!");
@@ -242,7 +247,8 @@ public class Problem14_ATM {
 			case 3:
 				withdrawAmount(currUser);
 				break;
-			case 4: System.out.println("\nThank you for banking with us!");
+			case 4:
+				System.out.println("\nThank you for banking with us!");
 				break;
 			default:
 				System.out.println("Invalid choice!");
@@ -252,12 +258,72 @@ public class Problem14_ATM {
 
 	}
 
-	static void forgotPassword() {
+	static void forgotPassword(ArrayList<User> listOfUser) {
 
+		// Get username
+		Scanner sc = new Scanner(System.in);
+		System.out.print("\nEnter User ID: ");
+		String username = sc.next();
+
+		// Check if username exists. If not, loop
+		while (!isEmailValid(listOfUser, username)) {
+			System.out.println("\nUser does not exist!");
+			System.out.print("\nEnter User ID: ");
+			username = sc.next();
+		}
+
+		// Get security key
+		System.out.print("Enter security key: ");
+		String securityKey = sc.next();
+
+		// Check if security key is valid
+		while (!isSecurityKeyValid(listOfUser, username, securityKey)) {
+			System.out.println("Wrong security key!");
+
+			System.out.print("\nEnter security key: ");
+			securityKey = sc.next();
+		}
+
+		// Get new password
+		System.out.print("Enter new password: ");
+		String password = sc.next();
+
+		// Retype password
+		System.out.print("Retype password: ");
+		String retypePassword = sc.next();
+
+		// Check that both passwords are the same
+		while (!password.equals(retypePassword)) {
+			// Display error message
+			System.out.println("\nPassword does not match!");
+
+			// Get new password
+			System.out.print("\nEnter new password: ");
+			password = sc.next();
+
+			// Retype password
+			System.out.print("Retype password: ");
+			retypePassword = sc.next();
+		}
+
+		// Get favourite color
+		System.out.print("What is your favourite color? ");
+		String favouriteColor = sc.next();
+		System.out.println(favouriteColor + " is your security key, if you forget your password.");
+
+		// Store new password and new color
+		User user = getCurrentUser(listOfUser, username);
+		user.getCredential().setFavouriteColor(favouriteColor);
+		user.getCredential().setPassword(password);
+
+		// Display success message
+		System.out.println("\nYour password has been reset succesfully!");
+
+		// TODO check if this method is working properly
 	}
 
 	static void logout() {
-		System.out.println("\nSystem shut down!");
+		System.out.println("\nLogged out successfully!");
 	}
 
 	/*
@@ -278,7 +344,7 @@ public class Problem14_ATM {
 	static void checkBalance(User user) {
 
 		System.out.println("Available balance: $" + user.getAccountInfo().getBalance());
-		
+
 	}
 
 	static void depositAmount(User user) {
@@ -311,7 +377,7 @@ public class Problem14_ATM {
 		// If the amount entered is negative or is more than the available balance,
 		// then ask the user to enter a new amount
 		while (withdrawAmount < 0 || !user.getAccountInfo().isWithdrawOk(withdrawAmount)) {
-			// Display error message 
+			// Display error message
 			if (withdrawAmount < 0) {
 				System.out.println("Amount can't be negative!");
 			} else if (!user.getAccountInfo().isWithdrawOk(withdrawAmount)) {
@@ -333,13 +399,16 @@ public class Problem14_ATM {
 		// Check if email exists within list of users
 		for (User user : listOfUser) {
 			if (user.getCredential().getEmail().equals(email)) {
-				System.out.println("Email already exists!");
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
+	/*
+	 * Takes a username and password and checks against database. If username
+	 * exists, check if password matches
+	 */
 	static boolean isUserDataValid(ArrayList<User> listOfUser, String username, String password) {
 
 		// Check if the username exists in user records
@@ -347,6 +416,21 @@ public class Problem14_ATM {
 			if (user.getCredential().getEmail().equals(username)) {
 				// Check if corresponding user entered correct password
 				if (user.getCredential().getPassword().equals(password)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	static boolean isSecurityKeyValid(ArrayList<User> listOfUser, String username, String securityKey) {
+
+		for (User user : listOfUser) {
+			// Find the user
+			if (user.getCredential().getEmail().equals(username)) {
+				// Check if the security key is correct
+				if (user.getCredential().getFavouriteColor().equals(securityKey)) {
 					return true;
 				}
 			}
