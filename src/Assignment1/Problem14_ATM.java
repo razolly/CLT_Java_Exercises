@@ -3,6 +3,9 @@ package Assignment1;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ * POJO to store user information
+ */
 class User {
 
 	private Credentials credential;
@@ -79,7 +82,10 @@ class AccountInfo {
 		balance = 1000; // Set balance to $1000 by default
 	}
 
-	/* Returns balance. Calling method can print the returned value */
+	/*
+	 * Returns balance (basically a GET method) The calling method can print the
+	 * returned value
+	 */
 	public int checkAvailableBalance() {
 		return balance;
 	}
@@ -100,6 +106,10 @@ class AccountInfo {
 			return true;
 		}
 	}
+
+	public int getBalance() {
+		return balance;
+	}
 }
 
 public class Problem14_ATM {
@@ -109,8 +119,9 @@ public class Problem14_ATM {
 	 */
 	public static void main(String[] args) {
 
-		int userChoice;
+		// Stores record of all Users registered. Similar to a database
 		ArrayList<User> listOfUser = new ArrayList<User>();
+		int userChoice;
 
 		Scanner sc = new Scanner(System.in);
 
@@ -124,13 +135,16 @@ public class Problem14_ATM {
 				register(listOfUser);
 				break;
 			case 2:
-				login();
+				login(listOfUser);
 				break;
 			case 3:
 				forgotPassword();
 				break;
 			case 4:
 				logout();
+				break;
+			case 5:
+				displayAllUserInfo(listOfUser); // Secret method
 				break;
 			default:
 				System.out.println("Invalid choice");
@@ -184,7 +198,7 @@ public class Problem14_ATM {
 		System.out.println("\nRegistration Successful!");
 	}
 
-	static void login() {
+	static void login(ArrayList<User> listOfUser) {
 
 		// Get username
 		Scanner sc = new Scanner(System.in);
@@ -196,7 +210,8 @@ public class Problem14_ATM {
 		String password = sc.next();
 
 		// Check if user credentials is valid
-		while (!isUserDataValid(username, password)) {
+		while (!isUserDataValid(listOfUser, username, password)) {
+			System.out.println("Invalid username/password!");
 			System.out.print("\nEnter User ID: ");
 			username = sc.next();
 
@@ -206,6 +221,9 @@ public class Problem14_ATM {
 
 		System.out.println("\nLogin Successful!");
 
+		// Reference to the current user in the database
+		// int userPosition = getUserPosition(listOfUser);
+		User currUser = getCurrentUser(listOfUser, username);
 		int userAccountChoice;
 
 		// Display next menu. Loop until user quits (choice 4)
@@ -216,13 +234,13 @@ public class Problem14_ATM {
 
 			switch (userAccountChoice) {
 			case 1:
-				checkBalance();
+				checkBalance(currUser);
 				break;
 			case 2:
-				depositAmount();
+				depositAmount(currUser);
 				break;
 			case 3:
-				withdrawAmount();
+				withdrawAmount(currUser);
 				break;
 			case 4: // Exit menu
 				break;
@@ -242,9 +260,24 @@ public class Problem14_ATM {
 		System.out.println("\nSystem shut down!");
 	}
 
-	static void checkBalance() {
-		int balance = 0;
-		System.out.println("Available balance: " + balance);
+	/*
+	 * Return reference to the User in database being searched for
+	 */
+	static User getCurrentUser(ArrayList<User> listOfUser, String username) {
+
+		for (User user : listOfUser) {
+			if (user.getCredential().getEmail().equals(username)) {
+				return user;
+			}
+		}
+
+		// Return nothing if user is not found
+		return null;
+	}
+
+	static void checkBalance(User user) {
+
+		System.out.println("Available balance: $" + user.getAccountInfo().getBalance());
 		System.out.print("Wish to continue? (y/n): ");
 
 		Scanner sc = new Scanner(System.in);
@@ -253,25 +286,29 @@ public class Problem14_ATM {
 		}
 	}
 
-	static void depositAmount() {
+	static void depositAmount(User user) {
 
 		// Get amount to deposit
 		System.out.print("\nEnter Amount: ");
 		Scanner sc = new Scanner(System.in);
 		int depositAmount = sc.nextInt();
 
+		// Loop until a positive amount is entered
 		while (depositAmount < 0) {
 			System.out.println("Amount can't be negative!");
 			System.out.print("\nEnter Amount: ");
 			depositAmount = sc.nextInt();
 		}
+		
+		// Deposit amount in user account
+		user.getAccountInfo().depositAmount(depositAmount);
 
 		System.out.println("$" + depositAmount + " deposited successfully!");
 		// System.out.print("\nWish to continue? (y/n): ");
 	}
 
 	static void withdrawAmount() {
-
+		// TODO do this method
 	}
 
 	static boolean isEmailValid(ArrayList<User> listOfUser, String email) {
@@ -286,8 +323,31 @@ public class Problem14_ATM {
 		return true;
 	}
 
-	static boolean isUserDataValid(String username, String password) {
-		return true;
+	static boolean isUserDataValid(ArrayList<User> listOfUser, String username, String password) {
+
+		// Check if the username exists in user records
+		for (User user : listOfUser) {
+			if (user.getCredential().getEmail().equals(username)) {
+				// Check if corresponding user entered correct password
+				if (user.getCredential().getPassword().equals(password)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	static void displayAllUserInfo(ArrayList<User> listOfUser) {
+
+		for (User user : listOfUser) {
+			System.out.println("\nUser email: " + user.getCredential().getEmail());
+			System.out.println("User password: " + user.getCredential().getPassword());
+			System.out.println("User security question: " + user.getCredential().getFavouriteColor());
+			System.out.println("Account balance: $ " + user.getAccountInfo().getBalance());
+			System.out.println();
+		}
+
 	}
 
 	static void displayMenu() {
