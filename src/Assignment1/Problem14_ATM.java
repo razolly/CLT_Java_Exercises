@@ -159,7 +159,7 @@ public class Problem14_ATM {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\nEnter email address: ");
 		String email = sc.next();
-		
+
 		// Ensure email does not exist, before registering
 		while (isEmailExisting(listOfUser, email)) {
 			// Display error message
@@ -167,7 +167,7 @@ public class Problem14_ATM {
 			System.out.print("\nEnter email address: ");
 			email = sc.next();
 		}
-		
+
 		// Get password
 		System.out.print("Enter Password: ");
 		String password = sc.next();
@@ -223,7 +223,6 @@ public class Problem14_ATM {
 		System.out.println("\nLogin Successful!");
 
 		// Reference to the current user in the database
-		// int userPosition = getUserPosition(listOfUser);
 		User currUser = getCurrentUser(listOfUser, username);
 		int userAccountChoice;
 
@@ -388,8 +387,8 @@ public class Problem14_ATM {
 
 	}
 
-	/* 
-	 * Checks if email exists within a list of users 
+	/*
+	 * Checks if email exists within a list of users
 	 */
 	static boolean isEmailExisting(ArrayList<User> listOfUser, String email) {
 
