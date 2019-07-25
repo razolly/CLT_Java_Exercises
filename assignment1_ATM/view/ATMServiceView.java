@@ -13,16 +13,24 @@ public interface ATMServiceView {
 	String requestFavoriteColor();
 	void displayExistingEmailError();
 	void displayRetypedPasswordError();
-	void displaySuccessMessage();
+	void displayRegistrationSuccessMessage();
 	
 	// Option 2: Login
 	void displayLoginSuccessfulMessage();
 	void displayAccountMenu();
 	int requestUserChoice();
+	void displayLoginFailMessage();
+	void displayAccountBalance(int balance);
+	int requestDepositAmount();
+	void displayDepositSuccessMessage(int amount);
+	int requestWithdrawAmount();
+	void displayInsufficientBalanceMessage();
+	void displayWithdrawSuccessMessage(int withdrawAmount);
 	
 	// Option 4: Logout
 	void displayLogoutMessage();
 	
 	// Option 5 (Secret): Display all users
 	void displayAllUsers(ArrayList<User> users);
+	
 }

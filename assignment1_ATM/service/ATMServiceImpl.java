@@ -31,7 +31,7 @@ public class ATMServiceImpl implements ATMService {
 		String newFavouriteColor = view.requestFavoriteColor();
 
 		// Display success message
-		view.displaySuccessMessage();
+		view.displayRegistrationSuccessMessage();
 
 		// Create POJO and store new user in database using the DAO
 		User newUser = new User();
@@ -51,7 +51,97 @@ public class ATMServiceImpl implements ATMService {
 		String password = view.requestPassword();
 
 		// Validate that username and password match
-		isCredentialValid(username, password);
+		// If not, then loop
+		while (!isCredentialValid(username, password)) {
+			// Display error
+			view.displayLoginFailMessage();
+
+			// Ask for username and password again
+			username = view.requestEmailAddress();
+			password = view.requestPassword();
+		}
+
+		// Display successful login message
+		view.displayLoginSuccessfulMessage();
+
+		int userChoice;
+
+		do {
+			// Display menu
+			view.displayAccountMenu();
+
+			// Request user menu choice
+			userChoice = view.requestUserChoice();
+
+			// Get object of user that logged in
+			User currUser = dao.getSingleUser(username);
+
+			switch (userChoice) {
+			case 1:
+				checkBalance(currUser);
+				break;
+			case 2:
+				depositAmount(currUser);
+				break;
+			case 3:
+				withdrawAmount(currUser);
+				break;
+			case 4:
+				System.out.println("\nThank you for banking with us!");
+				break;
+			default:
+				System.out.println("Invalid choice!");
+				break;
+			}
+
+		} while (userChoice != 4);
+	}
+
+	private void withdrawAmount(User currUser) {
+
+		int withdrawAmount = view.requestWithdrawAmount();
+		
+		while (withdrawAmount < 0 || !isBalanceEnough(currUser, withdrawAmount)) {
+			// Display error message
+			view.displayInsufficientBalanceMessage();
+			
+			// Ask for amount again
+			view.requestWithdrawAmount();
+		}
+		
+		// Deduct amount from balance
+		currUser.getAccountInfo().withdrawAmount(withdrawAmount);
+		
+		// Display success message
+		view.displayWithdrawSuccessMessage(withdrawAmount);
+	}
+
+	private void depositAmount(User currUser) {
+
+		// Get amount to deposit
+		int depositAmount = view.requestDepositAmount();
+
+		// Add amount to balance
+		currUser.getAccountInfo().depositAmount(depositAmount);
+
+		// Display success message
+		view.displayDepositSuccessMessage(depositAmount);
+	}
+
+	/*
+	 * Checks if user has enough balance to withdraw
+	 */
+	private boolean isBalanceEnough(User user, int withdrawAmount) {
+		
+		if (user.getAccountInfo().getBalance() < withdrawAmount) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	private void checkBalance(User currUser) {
+		view.displayAccountBalance(currUser.getAccountInfo().getBalance());
 	}
 
 	@Override
@@ -83,9 +173,9 @@ public class ATMServiceImpl implements ATMService {
 		// Loop through database
 		for (User user : dao.getAll()) {
 			// Find by username
-			if(user.getCredential().getEmail().equals(username)) {
+			if (user.getCredential().getEmail().equals(username)) {
 				// Check if password matches
-				if(user.getCredential().getPassword().equals(password)) {
+				if (user.getCredential().getPassword().equals(password)) {
 					return true;
 				}
 			}

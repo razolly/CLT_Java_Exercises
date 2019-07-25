@@ -82,8 +82,13 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	}
 
 	@Override
-	public void displaySuccessMessage() {
+	public void displayRegistrationSuccessMessage() {
 		System.out.println("Registration Successful!");
+	}
+	
+	@Override
+	public void displayWithdrawSuccessMessage(int withdrawAmount) {
+		System.out.println("$" + withdrawAmount + " withdrawn successfully!");
 	}
 
 	@Override
@@ -106,6 +111,11 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	public void displayLoginSuccessfulMessage() {
 		System.out.println("Login Successful!");
 	}
+	
+	@Override
+	public void displayLoginFailMessage() {
+		System.out.println("Login failed! Invalid username/password...");
+	}
 
 	@Override
 	public void displayAccountMenu() {
@@ -125,5 +135,53 @@ public class ATMServiceViewImpl implements ATMServiceView {
 		
 		return choice;
 	}
+
+	@Override
+	public void displayAccountBalance(int balance) {
+		System.out.println("Available balance: $" + balance);
+	}
+
+	@Override
+	public int requestDepositAmount() {
+		
+		System.out.println("Enter amount: $");
+		int depositAmount = sc.nextInt();
+		
+		// Ensure amount is not negative
+		while(depositAmount < 0) {
+			System.out.println("Amount cannot be negative!");
+			System.out.println("Enter amount: $");
+			depositAmount = sc.nextInt();
+		}
+		
+		return depositAmount;
+	}
+
+	@Override
+	public void displayDepositSuccessMessage(int amount) {
+		System.out.println("$" + amount + " successfully deposited!");
+	}
+
+	@Override
+	public int requestWithdrawAmount() {
+		
+		System.out.println("Enter amount: $");
+		int withdrawAmount = sc.nextInt();
+		
+		// Ensure amount is not negative
+		while(withdrawAmount < 0) {
+			System.out.println("Amount cannot be negative!");
+			System.out.println("Enter amount: $");
+			withdrawAmount = sc.nextInt();
+		}
+		
+		return withdrawAmount;
+	}
+
+	@Override
+	public void displayInsufficientBalanceMessage() {
+		System.out.println("Sorry! Insufficient balance...");
+	}
+	
 
 }
