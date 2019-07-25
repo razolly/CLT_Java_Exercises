@@ -182,6 +182,25 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	public void displayInsufficientBalanceMessage() {
 		System.out.println("Sorry! Insufficient balance...");
 	}
+
+	@Override
+	public String requestSecurityKey() {
+		
+		System.out.println("Enter security key: ");
+		String favoriteColor = sc.next();
+		
+		return favoriteColor;
+	}
+
+	@Override
+	public void displaySecurityKeyFailMessage() {
+		System.out.println("Sorry! Security key invalid...");
+	}
+
+	@Override
+	public void displayPasswordResetSuccessMessage() {
+		System.out.println("Your password has been reset successfully!");
+	}
 	
 
 }

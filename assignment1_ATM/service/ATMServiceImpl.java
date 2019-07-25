@@ -100,18 +100,18 @@ public class ATMServiceImpl implements ATMService {
 	private void withdrawAmount(User currUser) {
 
 		int withdrawAmount = view.requestWithdrawAmount();
-		
+
 		while (withdrawAmount < 0 || !isBalanceEnough(currUser, withdrawAmount)) {
 			// Display error message
 			view.displayInsufficientBalanceMessage();
-			
+
 			// Ask for amount again
 			view.requestWithdrawAmount();
 		}
-		
+
 		// Deduct amount from balance
 		currUser.getAccountInfo().withdrawAmount(withdrawAmount);
-		
+
 		// Display success message
 		view.displayWithdrawSuccessMessage(withdrawAmount);
 	}
@@ -132,7 +132,7 @@ public class ATMServiceImpl implements ATMService {
 	 * Checks if user has enough balance to withdraw
 	 */
 	private boolean isBalanceEnough(User user, int withdrawAmount) {
-		
+
 		if (user.getAccountInfo().getBalance() < withdrawAmount) {
 			return false;
 		} else {
@@ -146,8 +146,43 @@ public class ATMServiceImpl implements ATMService {
 
 	@Override
 	public void forgotPassword() {
-		// TODO Auto-generated method stub
 
+		// Request username
+		String username = view.requestEmailAddress();
+
+		// Request security key
+		String favoriteColor = view.requestSecurityKey();
+
+		// Check if user exists and security key is correct
+		while (!dao.isUserExisting(username) || !isSecurityKeyCorrect(username, favoriteColor)) {
+			// Display error
+			view.displaySecurityKeyFailMessage();
+
+			// Request for details again
+			username = view.requestEmailAddress();
+			favoriteColor = view.requestSecurityKey();
+		}
+
+		// Request for new user password
+		String newPassword = view.requestNewPassword();
+		
+		// Set the new password
+		dao.getSingleUser(username).getCredential().setPassword(newPassword);
+
+		// Display success message
+		view.displayPasswordResetSuccessMessage();
+	}
+
+	/*
+	 * Checks if security key of the respective user is correct
+	 */
+	private boolean isSecurityKeyCorrect(String username, String favoriteColor) {
+
+		if (dao.getSingleUser(username).getCredential().getFavouriteColor().equals(favoriteColor)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -167,7 +202,6 @@ public class ATMServiceImpl implements ATMService {
 	/*
 	 * Checks if user login is valid
 	 */
-	@Override
 	public boolean isCredentialValid(String username, String password) {
 
 		// Loop through database

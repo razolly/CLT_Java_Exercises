@@ -27,10 +27,15 @@ public interface ATMServiceView {
 	void displayInsufficientBalanceMessage();
 	void displayWithdrawSuccessMessage(int withdrawAmount);
 	
+	// Option 3: Forgot Password
+	String requestSecurityKey();
+	void displaySecurityKeyFailMessage();
+	void displayPasswordResetSuccessMessage();
+	
 	// Option 4: Logout
 	void displayLogoutMessage();
 	
 	// Option 5 (Secret): Display all users
 	void displayAllUsers(ArrayList<User> users);
-	
+		
 }
