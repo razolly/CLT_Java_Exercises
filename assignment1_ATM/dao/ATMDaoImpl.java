@@ -11,6 +11,28 @@ public class ATMDaoImpl implements ATMDao {
 
 	public ATMDaoImpl() {
 		userDatabase = new ArrayList<User>();
+		
+		// TODO delete this
+		User u1 = new User();
+		u1.getCredential().setEmail("raz@g");
+		u1.getCredential().setPassword("123");
+		u1.getCredential().setFavouriteColor("red");
+		
+		userDatabase.add(u1);
+		
+		User u2 = new User();
+		u2.getCredential().setEmail("alex@g");
+		u2.getCredential().setPassword("678");
+		u2.getCredential().setFavouriteColor("black");
+		
+		userDatabase.add(u2);
+		
+		User u3 = new User();
+		u3.getCredential().setEmail("bird@g");
+		u3.getCredential().setPassword("999");
+		u3.getCredential().setFavouriteColor("green");
+		
+		userDatabase.add(u3);
 	}
 
 	/*

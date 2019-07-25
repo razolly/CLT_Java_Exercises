@@ -19,6 +19,7 @@ public class ATMMainViewImpl implements ATMMainView {
 		System.out.println("-----------------------------------------------------");
 		System.out.print(
 				"User Home Page: " + "\n1. Register" + "\n2. Login" + "\n3. Forgot Password" + "\n4. Logout (exit)");
+		System.out.println();
 	}
 
 	@Override

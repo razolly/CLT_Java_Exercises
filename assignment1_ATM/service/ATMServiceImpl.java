@@ -101,7 +101,8 @@ public class ATMServiceImpl implements ATMService {
 
 		int withdrawAmount = view.requestWithdrawAmount();
 
-		while (withdrawAmount < 0 || !isBalanceEnough(currUser, withdrawAmount)) {
+		// If amount is negative or there is insufficient balance, then loop
+		while (withdrawAmount < 0 || !currUser.getAccountInfo().isWithdrawOk(withdrawAmount)) {
 			// Display error message
 			view.displayInsufficientBalanceMessage();
 
@@ -165,7 +166,7 @@ public class ATMServiceImpl implements ATMService {
 
 		// Request for new user password
 		String newPassword = view.requestNewPassword();
-		
+
 		// Set the new password
 		dao.getSingleUser(username).getCredential().setPassword(newPassword);
 

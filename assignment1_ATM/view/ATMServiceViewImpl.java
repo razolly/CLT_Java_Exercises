@@ -16,44 +16,44 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	@Override
 	public String requestEmailAddress() {
 
-		System.out.println("Enter email address: ");
+		System.out.print("\nEnter email address: ");
 		String email = sc.next();
 
 		return email;
 	}
-	
-	/* 
-	 * Request a SINGLE password. Does not request password to be retyped 
+
+	/*
+	 * Request a SINGLE password. Does not request password to be retyped
 	 */
 	@Override
 	public String requestPassword() {
-		
-		System.out.println("Enter password: ");
+
+		System.out.print("Enter password: ");
 		String password = sc.next();
-		
+
 		return password;
 	}
-	
-	/* 
-	 * Request a NEW password. This includes retyping the password 
+
+	/*
+	 * Request a NEW password. This includes retyping the password
 	 */
 	@Override
 	public String requestNewPassword() {
 
-		System.out.println("Enter password: ");
+		System.out.print("Enter password: ");
 		String password = sc.next();
 
-		System.out.println("Re-enter password: ");
+		System.out.print("Re-enter password: ");
 		String retypePassword = sc.next();
 
 		// TODO retype password
 		while (!password.equals(retypePassword)) {
 			displayRetypedPasswordError();
 
-			System.out.println("Enter password: ");
+			System.out.print("Enter password: ");
 			password = sc.next();
 
-			System.out.println("Re-enter password: ");
+			System.out.print("Re-enter password: ");
 			retypePassword = sc.next();
 		}
 
@@ -63,7 +63,7 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	@Override
 	public String requestFavoriteColor() {
 
-		System.out.println("What is your favourite color? ");
+		System.out.print("What is your favourite color? ");
 		String favouriteColor = sc.next();
 
 		System.out.println(favouriteColor + " is your security key, in case you forget your password.");
@@ -83,9 +83,9 @@ public class ATMServiceViewImpl implements ATMServiceView {
 
 	@Override
 	public void displayRegistrationSuccessMessage() {
-		System.out.println("Registration Successful!");
+		System.out.println("\nRegistration Successful!");
 	}
-	
+
 	@Override
 	public void displayWithdrawSuccessMessage(int withdrawAmount) {
 		System.out.println("$" + withdrawAmount + " withdrawn successfully!");
@@ -95,10 +95,10 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	public void displayAllUsers(ArrayList<User> users) {
 		for (User user : users) {
 			System.out.println();
-			System.out.println(user.getCredential().getEmail());
-			System.out.println(user.getCredential().getPassword());
-			System.out.println(user.getCredential().getFavouriteColor());
-			System.out.println(user.getAccountInfo().getBalance());
+			System.out.println("Email: \t\t" + user.getCredential().getEmail());
+			System.out.println("Password: \t" + user.getCredential().getPassword());
+			System.out.println("Security Key: \t" + user.getCredential().getFavouriteColor());
+			System.out.println("Balance: \t$" + user.getAccountInfo().getBalance());
 		}
 	}
 
@@ -109,9 +109,9 @@ public class ATMServiceViewImpl implements ATMServiceView {
 
 	@Override
 	public void displayLoginSuccessfulMessage() {
-		System.out.println("Login Successful!");
+		System.out.println("\nLogin Successful!");
 	}
-	
+
 	@Override
 	public void displayLoginFailMessage() {
 		System.out.println("Login failed! Invalid username/password...");
@@ -125,35 +125,36 @@ public class ATMServiceViewImpl implements ATMServiceView {
 		System.out.println("--------------------------------------------------------");
 		System.out.println(
 				"Type 1: Check Available Bank Balance\nType 2: Deposit Amount\nType 3: Withdraw Amount\nType 4: Quit");
+		System.out.println();
 	}
 
 	@Override
 	public int requestUserChoice() {
-		
-		System.out.print("\nEnter your choice: ");
+
+		System.out.print("Enter your choice: ");
 		int choice = sc.nextInt();
-		
+
 		return choice;
 	}
 
 	@Override
 	public void displayAccountBalance(int balance) {
-		System.out.println("Available balance: $" + balance);
+		System.out.println("\nAvailable balance: $" + balance);
 	}
 
 	@Override
 	public int requestDepositAmount() {
-		
-		System.out.println("Enter amount: $");
+
+		System.out.print("\nEnter amount: $");
 		int depositAmount = sc.nextInt();
-		
+
 		// Ensure amount is not negative
-		while(depositAmount < 0) {
+		while (depositAmount < 0) {
 			System.out.println("Amount cannot be negative!");
-			System.out.println("Enter amount: $");
+			System.out.print("Enter amount: $");
 			depositAmount = sc.nextInt();
 		}
-		
+
 		return depositAmount;
 	}
 
@@ -164,17 +165,17 @@ public class ATMServiceViewImpl implements ATMServiceView {
 
 	@Override
 	public int requestWithdrawAmount() {
-		
-		System.out.println("Enter amount: $");
+
+		System.out.print("\nEnter amount: $");
 		int withdrawAmount = sc.nextInt();
-		
+
 		// Ensure amount is not negative
-		while(withdrawAmount < 0) {
+		while (withdrawAmount < 0) {
 			System.out.println("Amount cannot be negative!");
-			System.out.println("Enter amount: $");
+			System.out.print("Enter amount: $");
 			withdrawAmount = sc.nextInt();
 		}
-		
+
 		return withdrawAmount;
 	}
 
@@ -185,10 +186,10 @@ public class ATMServiceViewImpl implements ATMServiceView {
 
 	@Override
 	public String requestSecurityKey() {
-		
-		System.out.println("Enter security key: ");
+
+		System.out.print("Enter security key: ");
 		String favoriteColor = sc.next();
-		
+
 		return favoriteColor;
 	}
 
@@ -201,6 +202,5 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	public void displayPasswordResetSuccessMessage() {
 		System.out.println("Your password has been reset successfully!");
 	}
-	
 
 }
