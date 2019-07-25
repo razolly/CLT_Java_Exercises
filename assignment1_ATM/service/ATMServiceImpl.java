@@ -107,7 +107,7 @@ public class ATMServiceImpl implements ATMService {
 			view.displayInsufficientBalanceMessage();
 
 			// Ask for amount again
-			view.requestWithdrawAmount();
+			withdrawAmount = view.requestWithdrawAmount();
 		}
 
 		// Deduct amount from balance
@@ -127,18 +127,6 @@ public class ATMServiceImpl implements ATMService {
 
 		// Display success message
 		view.displayDepositSuccessMessage(depositAmount);
-	}
-
-	/*
-	 * Checks if user has enough balance to withdraw
-	 */
-	private boolean isBalanceEnough(User user, int withdrawAmount) {
-
-		if (user.getAccountInfo().getBalance() < withdrawAmount) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	private void checkBalance(User currUser) {
