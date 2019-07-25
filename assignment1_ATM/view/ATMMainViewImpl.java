@@ -24,10 +24,22 @@ public class ATMMainViewImpl implements ATMMainView {
 
 	@Override
 	public int requestUserChoice() {
-		
-		System.out.print("\nEnter your choice: ");
-		int choice = sc.nextInt();
-		
+
+		boolean isInputValid = false; 	// Flag to check if input is valid
+		int choice = -1; 	// Rubbish value
+
+		while (!isInputValid) {
+			try {
+				System.out.print("\nEnter your choice: ");
+				choice = sc.nextInt();
+				isInputValid = true; 	// break out of loop
+			} catch (Exception e) {
+				System.out.println("Invalid input!");
+				sc.next();	// Clear scanners buffer
+			}
+			
+		}
+
 		return choice;
 	}
 

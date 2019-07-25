@@ -13,7 +13,7 @@ public class ATMDaoImpl implements ATMDao {
 		userDatabase = new ArrayList<User>();
 		
 		// Uncomment this for testing
-		// addMockUsers();
+		addMockUsers();
 	}
 
 	/*
