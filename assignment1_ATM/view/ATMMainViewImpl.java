@@ -22,11 +22,10 @@ public class ATMMainViewImpl implements ATMMainView {
 	}
 
 	@Override
-	public int getUserChoice() {
+	public int requestUserChoice() {
 		
 		System.out.print("\nEnter your choice: ");
 		int choice = sc.nextInt();
-		// TODO try catch for invalid input
 		
 		return choice;
 	}

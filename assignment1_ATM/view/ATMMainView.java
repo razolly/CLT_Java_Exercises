@@ -4,5 +4,5 @@ public interface ATMMainView {
 
 	void displayMainMenu();
 	
-	int getUserChoice();
+	int requestUserChoice();
 }

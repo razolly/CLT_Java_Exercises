@@ -27,24 +27,14 @@ class User {
 
 class Credentials {
 
-	private String username;
 	private String password;
 	private String email;
 	private String favouriteColor;
 
 	public Credentials() {
-		username = "";
 		password = "";
 		email = "";
 		favouriteColor = "";
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {

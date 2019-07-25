@@ -7,4 +7,7 @@ public interface ATMService {
 	void forgotPassword();
 	void logout();
 	void displayAllUserInfo(); 
+	
+	// Might have to move this
+	boolean isCredentialValid(String username, String password);
 }

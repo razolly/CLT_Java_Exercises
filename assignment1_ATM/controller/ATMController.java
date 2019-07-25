@@ -22,7 +22,7 @@ public class ATMController {
 			view.displayMainMenu();
 
 			// Get users choice
-			userChoice = view.getUserChoice();
+			userChoice = view.requestUserChoice();
 
 			// Run the respective service
 			switch (userChoice) {
