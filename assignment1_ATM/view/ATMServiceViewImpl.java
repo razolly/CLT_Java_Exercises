@@ -104,7 +104,7 @@ public class ATMServiceViewImpl implements ATMServiceView {
 
 	@Override
 	public void displayLogoutMessage() {
-		System.out.println("Logged out successfully!");
+		System.out.println("\nLogged out successfully!");
 	}
 
 	@Override
@@ -201,6 +201,11 @@ public class ATMServiceViewImpl implements ATMServiceView {
 	@Override
 	public void displayPasswordResetSuccessMessage() {
 		System.out.println("Your password has been reset successfully!");
+	}
+
+	@Override
+	public void displayUserAlreadyExistsMessage() {
+		System.out.println("Email already exists!");
 	}
 
 }

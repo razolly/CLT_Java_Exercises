@@ -11,6 +11,7 @@ public interface ATMServiceView {
 	String requestPassword();
 	String requestNewPassword();
 	String requestFavoriteColor();
+	void displayUserAlreadyExistsMessage();
 	void displayExistingEmailError();
 	void displayRetypedPasswordError();
 	void displayRegistrationSuccessMessage();

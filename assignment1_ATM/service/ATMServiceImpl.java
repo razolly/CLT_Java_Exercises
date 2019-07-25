@@ -18,11 +18,22 @@ public class ATMServiceImpl implements ATMService {
 		dao = new ATMDaoImpl();
 	}
 
+	/*
+	 * Register a new user
+	 */
 	@Override
 	public void register() {
 
 		// Request for new user email address
 		String newEmail = view.requestEmailAddress();
+
+		// Check if email exists
+		while (dao.getSingleUser(newEmail) != null) {
+			// Display error message
+			view.displayUserAlreadyExistsMessage();
+			
+			newEmail = view.requestEmailAddress();
+		}
 
 		// Request for new user password
 		String newPassword = view.requestNewPassword();
