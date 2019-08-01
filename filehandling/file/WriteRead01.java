@@ -3,7 +3,6 @@ package file;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -131,8 +130,14 @@ public class WriteRead01 {
 	 */
 	private static File findOrCreateFile(String fileName) throws IOException {
 
-		// TODO Check if file name already has .txt or .doc at the back
-		File f = new File(fileName + ".txt");
+		File f = null;
+
+		// Check if file name already has .txt or .doc at the back else, append it
+		if (!fileName.contains(".txt") || !fileName.contains(".doc")) {
+			f = new File(fileName + ".txt");
+		} else {
+			f = new File(fileName);
+		}
 
 		// Check if file exists. Else, create it
 		if (!f.exists()) {
