@@ -12,29 +12,36 @@ import java.util.StringTokenizer;
 public class WriteRead01 {
 
 	/*
-	 * Ask user for file name 
-	 * if it exists, open it, else create it 
-	 * ask user to enter text into file 
-	 * do word count and print to console
+	 * Ask user for file name if it exists, open it, else create it ask user to
+	 * enter text into file do word count and print to console
 	 */
 
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 
-		// Ask user for file name
-		System.out.print("What file do you want to read from? ");
-		String filename = sc.next();
-
 		try {
 
-			// Check if it exists, else create it
-			File f = new File(filename + ".txt"); // TODO what if user enters .txt? It will be .txt.doc
-			if (!f.exists()) {
-				System.out.println(f + " does not exist! Creating " + f + "!\n");
-				f.createNewFile();
-			} else {
-				System.out.println("Opening " + f + "\n");
+			// Ask user for file name
+			System.out.print("What file do you want to read from? ");
+			String fileName = sc.next();
+
+			// Check if file exists, else create it
+			File f = findOrCreateFile(fileName);
+
+			// If file exists, ask if want to read or write
+			// If file doesnt exist, ask user to write
+			if (f.exists()) {
+				System.out.println("\nChoose an option:\n1) Display file contents\n2) Edit file contents");
+				
+				String choice = sc.next();
+				if (choice == "1") {
+					displayFileContents(fileName);
+				} else if (choice == "2") {
+
+				} else {
+
+				}
 			}
 
 			// Ask user for text to enter into file
@@ -64,7 +71,7 @@ public class WriteRead01 {
 			// Display text entered and do word count
 			int wordCount = 0;
 			if (f.exists()) {
-				
+
 				System.out.println("\nReading contents of " + f);
 
 				// Use filereader to get data from file
@@ -93,15 +100,29 @@ public class WriteRead01 {
 		}
 
 	}
-	
-	/* 
-	 * Ask for file name
-	 * If it exists, return the file name (with .txt appended) 
+
+	private static void displayFileContents(String fileName) {
+		
+	}
+
+	/*
+	 * Ask for file name If it exists, return the file name (with .txt appended)
 	 * Else, create it and return the file name
 	 */
-	static String findOrCreateFile() {
-		// This comment should not be on master branch
-		return "";
+	private static File findOrCreateFile(String fileName) throws IOException {
+
+		// TODO Check if file name already has .txt or .doc at the back
+		File f = new File(fileName + ".txt");
+
+		// Check if file exists. Else, create it
+		if (!f.exists()) {
+			System.out.println(f + " does not exist! Creating " + f + "!\n");
+			f.createNewFile();
+		} else {
+			System.out.println("Opening " + f + "\n");
+		}
+
+		return f;
 	}
 
 }
