@@ -3,6 +3,7 @@ package file;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,69 +30,24 @@ public class WriteRead01 {
 			// Check if file exists, else create it
 			File f = findOrCreateFile(fileName);
 
-			// If file exists, ask if want to read or write
-			// If file doesnt exist, ask user to write
-			if (f.exists()) {
-				System.out.println("\nChoose an option:\n1) Display file contents\n2) Edit file contents");
-				
-				String choice = sc.next();
-				if (choice == "1") {
-					displayFileContents(fileName);
-				} else if (choice == "2") {
+			// Ask if want to read or write
+			System.out.println("Choose an option:\n1) Display file contents\n2) Edit file contents");
+			System.out.print("\nYour option: ");
 
-				} else {
+			String choice = sc.next();
 
-				}
-			}
+			if (choice.equals("1")) {
 
-			// Ask user for text to enter into file
-			BufferedWriter br = new BufferedWriter(new FileWriter(f));
-			boolean quit = false;
-			String userInput;
+				displayFileContents(f);
 
-			sc.nextLine(); // Clear buffer
+			} else if (choice.equals("2")) {
 
-			while (!quit) {
+				editFileContents(f);
+				displayFileContents(f);
 
-				System.out.print("Enter some text to file (Type q to quit) : ");
-				userInput = sc.nextLine();
+			} else {
 
-				if (userInput.equals("q")) {
-					quit = true;
-					break;
-				}
-
-				br.write(userInput);
-				br.newLine();
-
-			}
-
-			br.close();
-
-			// Display text entered and do word count
-			int wordCount = 0;
-			if (f.exists()) {
-
-				System.out.println("\nReading contents of " + f);
-
-				// Use filereader to get data from file
-				FileReader fr = new FileReader(f);
-
-				// Store content read via file reader
-				BufferedReader br2 = new BufferedReader(fr);
-
-				// Read the text in the buffer and display
-				String currentLine;
-				while ((currentLine = br2.readLine()) != null) {
-					StringTokenizer st = new StringTokenizer(currentLine);
-					wordCount += st.countTokens();
-					System.out.println(currentLine);
-				}
-
-				fr.close();
-
-				// Do word count and print to console
-				System.out.println("\nWord count: " + wordCount);
+				System.out.println("Invalid choice!");
 			}
 
 		} catch (IOException e) {
@@ -101,8 +57,72 @@ public class WriteRead01 {
 
 	}
 
-	private static void displayFileContents(String fileName) {
-		
+	/*
+	 * Asks user for input to enter into file
+	 */
+	private static void editFileContents(File f) throws IOException {
+
+		Scanner sc = new Scanner(System.in);
+
+		// Ask user for text to enter into file
+		BufferedWriter br = new BufferedWriter(new FileWriter(f));
+		boolean quit = false;
+		String userInput;
+
+		System.out.println();
+
+		while (!quit) {
+
+			System.out.print("Enter some text to file (Type q to quit) : ");
+			userInput = sc.nextLine();
+
+			if (userInput.equals("q")) {
+				quit = true;
+				break;
+			}
+
+			br.write(userInput);
+			br.newLine();
+
+		}
+
+		br.close();
+	}
+
+	/*
+	 * Displays contents and word count of a file
+	 */
+	private static void displayFileContents(File f) throws IOException {
+
+		int wordCount = 0;
+
+		if (f.exists()) {
+
+			System.out.println("\nReading contents of " + f);
+
+			// Use filereader to get data from file
+			FileReader fr = new FileReader(f);
+
+			// Store content read via file reader
+			BufferedReader br2 = new BufferedReader(fr);
+
+			// Read the text in the buffer and display
+			String currentLine;
+			while ((currentLine = br2.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(currentLine);
+				wordCount += st.countTokens();
+				System.out.println(currentLine);
+			}
+
+			fr.close();
+
+			// Do word count and print to console
+			System.out.println("\nWord count: " + wordCount);
+
+		} else {
+
+			System.out.println(f + " does not exist!");
+		}
 	}
 
 	/*
