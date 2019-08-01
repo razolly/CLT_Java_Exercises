@@ -133,10 +133,10 @@ public class WriteRead01 {
 		File f = null;
 
 		// Check if file name already has .txt or .doc at the back else, append it
-		if (!fileName.contains(".txt") || !fileName.contains(".doc")) {
-			f = new File(fileName + ".txt");
-		} else {
+		if (fileName.contains(".txt") || fileName.contains(".doc")) {
 			f = new File(fileName);
+		} else {
+			f = new File(fileName + ".txt");
 		}
 
 		// Check if file exists. Else, create it
