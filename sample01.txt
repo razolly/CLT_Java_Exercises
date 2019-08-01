@@ -1,0 +1,3 @@
+i like apples
+i like bananas
+i am doing file handling
