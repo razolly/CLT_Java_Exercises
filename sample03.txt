@@ -1,0 +1,3 @@
+this is a sentence
+today is thursday
+I am doing file handling
