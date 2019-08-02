@@ -11,7 +11,7 @@ import java.sql.Connection;
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	DBConnection db;
-	Statement st;
+	Statement st;	// PreparedStatement has better performance
 	Connection con;
 	
 	public EmployeeDAOImpl() throws ClassNotFoundException, SQLException {
@@ -21,18 +21,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		// Create connection to database
 		con = db.prepareConnection();	
+		// TODO close the connection
 		
-//		// Creating an Employee table
-//		System.out.println("Creating Employee Table");
-//		st = con.createStatement();
-//		String sql = "CREATE TABLE employees" + 
-//					"(employeeId INTEGER not NULL, " + 
-//					"employeeName VARCHAR(35), " + 
-//					"password VARCHAR(25), " + 
-//					"dateOfBirth VARCHAR(15), " + 
-//					"PRIMARY KEY (employeeId))";
-//		st.executeUpdate(sql); 	// Execute SQL statement
-//		System.out.println("Employee Table Created!");
+		// createEmployeeTable();	Table only needs to be created once
 	}
 
 	@Override
@@ -81,8 +72,34 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void removeEmployee(int employeeId) {
-		// TODO Auto-generated method stub
-
+		// Create SQL statement to delete database
+		String sql = "DELETE FROM employees WHERE employeeId = " + employeeId;
+		try {
+			// Execute SQL statement
+			st = con.createStatement();
+			st.executeUpdate(sql);
+			System.out.println("Employee " + employeeId + " removed!");
+		} catch (SQLException e) {
+			System.out.println("Failed to remove Employee " + employeeId);
+		}	
+	}
+	
+	private void createEmployeeTable() {
+		
+		try {
+			System.out.println("Creating Employee Table");
+			st = con.createStatement();
+			String sql = "CREATE TABLE employees" + 
+						"(employeeId INTEGER not NULL, " + 
+						"employeeName VARCHAR(35), " + 
+						"password VARCHAR(25), " + 
+						"dateOfBirth VARCHAR(15), " + 
+						"PRIMARY KEY (employeeId))";
+			st.executeUpdate(sql); 	// Execute SQL statement
+			System.out.println("Employee Table Created!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

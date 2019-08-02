@@ -4,6 +4,7 @@ import model.Employee;
 
 public interface EmployeeService {
 
-	void addEmployee(Employee employee);
+	void invokeAddEmployee(Employee employee);
 	
+	void invokeRemoveEmployee(int employeeId);
 }
