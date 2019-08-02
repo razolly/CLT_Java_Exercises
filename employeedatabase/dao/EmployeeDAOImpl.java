@@ -7,11 +7,12 @@ import java.util.List;
 import database.DBConnection;
 import model.Employee;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	DBConnection db;
-	Statement st;	// PreparedStatement has better performance
+	PreparedStatement ps;	
 	Connection con;
 	
 	public EmployeeDAOImpl() throws ClassNotFoundException, SQLException {
@@ -29,44 +30,37 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public void addEmployee(Employee employee) {
 		
-		// Extract values from Employee object
-		int employeeId = employee.getEmployeeId();
-		String employeeName = employee.getEmployeeName();
-		String password = employee.getPassword();
-		String dateOfBirth = employee.getDateOfBirth();
-		
-		// Create SQL statement to insert into database
-		String sql = "INSERT INTO employees " +
-					"VALUES (" + employeeId 
-					+ ", '" + employeeName 
-					+ "', '" + password 
-					+ "', '" + dateOfBirth
-					+ "')";
 		try {
+			
+			String sql = "INSERT INTO employees VALUES (?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, employee.getEmployeeId());
+			ps.setString(2, employee.getEmployeeName());
+			ps.setString(3, employee.getPassword());
+			ps.setString(4, employee.getDateOfBirth());
+			
 			// Execute SQL statement
-			st = con.createStatement();
-			st.executeUpdate(sql);
-			System.out.println(employeeName + " inserted!");
+			ps.executeUpdate();
+			System.out.println(employee.getEmployeeName() + " inserted!");
 		} catch (SQLException e) {
-			System.out.println(employeeName + " failed to insert!");
+			System.out.println(employee.getEmployeeName() + " failed to insert!");
 		}	
 	}
 
 	@Override
 	public void updateEmployee(Employee employee) {
 		
-		// Create SQL statement to update employee
-		String sql = "UPDATE employees SET employeeName = '" 
-				+ employee.getEmployeeName() + "', password = '" 
-				+ employee.getPassword() + "', dateOfBirth = '" 
-				+ employee.getDateOfBirth() 
-				+ "' WHERE employeeId = " 
-				+ employee.getEmployeeId();
-
 		try {
+			// Create SQL statement to update employee
+			String sql = "UPDATE employees SET employeeName = ?, password = ?, dateOfBirth = ? WHERE employeeId = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1,employee.getEmployeeName());
+			ps.setString(2, employee.getPassword());
+			ps.setString(3, employee.getDateOfBirth());
+			ps.setInt(4, employee.getEmployeeId());
+		
 			// Execute SQL statement
-			st = con.createStatement();
-			st.executeUpdate(sql);
+			ps.executeUpdate();
 			System.out.println("Employee " + employee.getEmployeeName() + " updated!");
 			
 		} catch (SQLException e) {
@@ -96,8 +90,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		String sql = "DELETE FROM employees WHERE employeeId = " + employeeId;
 		try {
 			// Execute SQL statement
-			st = con.createStatement();
-			st.executeUpdate(sql);
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
 			System.out.println("Employee " + employeeId + " removed!");
 		} catch (SQLException e) {
 			System.out.println("Failed to remove Employee " + employeeId);
@@ -108,14 +102,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		try {
 			System.out.println("Creating Employee Table");
-			st = con.createStatement();
 			String sql = "CREATE TABLE employees" + 
 						"(employeeId INTEGER not NULL, " + 
 						"employeeName VARCHAR(35), " + 
 						"password VARCHAR(25), " + 
 						"dateOfBirth VARCHAR(15), " + 
 						"PRIMARY KEY (employeeId))";
-			st.executeUpdate(sql); 	// Execute SQL statement
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
 			System.out.println("Employee Table Created!");
 		} catch (SQLException e) {
 			e.printStackTrace();
