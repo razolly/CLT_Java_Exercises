@@ -54,12 +54,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void updateEmployee(Employee employee) {
-		// Create SQL statement to update employee
 		
+		// Create SQL statement to update employee
 		String sql = "UPDATE employees SET employeeName = '" 
 				+ employee.getEmployeeName() + "', password = '" 
 				+ employee.getPassword() + "', dateOfBirth = '" 
-				+ employee.getDateOfBirth() + "' WHERE employeeId = " 
+				+ employee.getDateOfBirth() 
+				+ "' WHERE employeeId = " 
 				+ employee.getEmployeeId();
 
 		try {
@@ -82,12 +83,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public Employee getEmployeeById(int employeeId) {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return null;
 	}
 
 	@Override
 	public void removeEmployee(int employeeId) {
+		
 		// Create SQL statement to delete employee
 		String sql = "DELETE FROM employees WHERE employeeId = " + employeeId;
 		try {
