@@ -18,12 +18,15 @@ public class EmployeeController {
 
 	public void start() {
 
+		System.out.println("=======================================");
 		System.out.println("Welcome to Optimum Solutions Admin!");
+		System.out.println("=======================================");
 		System.out.println("Add an employee: ");
 
 		// Get ID
 		System.out.print("Enter employee ID: ");
 		int employeeId = sc.nextInt();
+		sc.nextLine();	// Clear buffer
 
 		// Get Name
 		System.out.print("Enter employee name: ");
