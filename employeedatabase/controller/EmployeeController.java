@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -27,8 +26,9 @@ public class EmployeeController {
 		System.out.println("Select option: ");
 		System.out.println("1) Add an employee");
 		System.out.println("2) Update an employee");
-		System.out.println("3) Get employee by ID");
-		System.out.println("4) Delete an employee");
+		System.out.println("3) Display employee by ID");
+		System.out.println("4) Display all employees");
+		System.out.println("5) Delete an employee");
 		System.out.print("\nYour choice: ");
 		
 		int userChoice = sc.nextInt();
@@ -41,7 +41,9 @@ public class EmployeeController {
 			break;
 		case 3: getEmployeeById();
 			break;
-		case 4: removeEmployee();
+		case 4: getAllEmployees();
+			break;
+		case 5: removeEmployee();
 			break;
 		default:
 			break;
@@ -59,6 +61,12 @@ public class EmployeeController {
 		// Pass EmployeeID to service to delete from database
 		service.invokeRemoveEmployee(employeeId);
 		
+	}
+	
+	private void getAllEmployees() {
+		
+		List<Employee> employees = service.invokeListEmployees();
+		displayEmployeeDetails(employees);
 	}
 	
 	private void getEmployeeById() {
@@ -158,7 +166,8 @@ public class EmployeeController {
 	private void displayEmployeeDetails(List<Employee> employees) {
 		
 		System.out.println("\nEmployee ID\tName\t\t\tPassword\t\tDate of Birth");
-		System.out.println("===================================================================================");
+		System.out.println("================================================" + 
+							"===================================");
 		
 		for(Employee e: employees) {
 			System.out.println(e.getEmployeeId() + "\t\t" 

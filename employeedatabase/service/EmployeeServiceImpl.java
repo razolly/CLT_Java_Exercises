@@ -1,6 +1,7 @@
 package service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.EmployeeDAO;
 import dao.EmployeeDAOImpl;
@@ -38,6 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee invokeGetEmployeeById(int employeeId) {
 		
 		return dao.getEmployeeById(employeeId);
+	}
+
+	@Override
+	public List<Employee> invokeListEmployees() {
+		
+		return dao.listEmployee();
 	}
 
 }

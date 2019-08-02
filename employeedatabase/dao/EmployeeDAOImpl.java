@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import database.DBConnection;
@@ -73,7 +74,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public List<Employee> listEmployee() {
-		// TODO Auto-generated method stub
+		
+		try {
+			// Retrieve data from table
+			ps = con.prepareStatement("SELECT * FROM employees");
+			
+			ResultSet rs = ps.executeQuery();	// Execute SQL statement
+			
+			// List to hold Employees
+			List<Employee> listOfEmployee = new ArrayList<Employee>();
+			rs.next();	// Position cursor to first row of ResultSet before reading
+			
+			// Extract values from result set and store in List
+			while (rs.next()) {
+				Employee e = new Employee();	
+				e.setEmployeeId(rs.getInt("employeeId"));
+				e.setEmployeeName(rs.getString("employeeName"));
+				e.setPassword(rs.getString("password"));
+				e.setDateOfBirth(rs.getString("dateOfBirth"));
+				listOfEmployee.add(e);
+			}
+			
+			// Return the Employee List
+			return listOfEmployee;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// If not found, return null
 		return null;
 	}
 
