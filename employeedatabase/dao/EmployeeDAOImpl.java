@@ -8,6 +8,7 @@ import database.DBConnection;
 import model.Employee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
@@ -42,6 +43,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			// Execute SQL statement
 			ps.executeUpdate();
 			System.out.println(employee.getEmployeeName() + " inserted!");
+			
 		} catch (SQLException e) {
 			System.out.println(employee.getEmployeeName() + " failed to insert!");
 		}	
@@ -78,21 +80,46 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public Employee getEmployeeById(int employeeId) {
 		
+		try {
+			// Retrieve data from table
+			String sql = "SELECT * FROM employees WHERE employeeId = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, employeeId);
+			
+			ResultSet rs = ps.executeQuery();	// Execute SQL statement
+			
+			// Extract values from result set and store in a Employee object
+			Employee employee = new Employee();
+			rs.next();	// Position cursor to first row of ResultSet before reading
+			employee.setEmployeeId(employeeId);
+			employee.setEmployeeName(rs.getString("employeeName"));
+			employee.setPassword(rs.getString("password"));
+			employee.setDateOfBirth(rs.getString("dateOfBirth"));
+			
+			// Return the Employee object
+			return employee;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
-		
+		// If not found, return null
 		return null;
 	}
 
 	@Override
 	public void removeEmployee(int employeeId) {
 		
-		// Create SQL statement to delete employee
-		String sql = "DELETE FROM employees WHERE employeeId = " + employeeId;
 		try {
-			// Execute SQL statement
+			// Create SQL statement to delete employee
+			String sql = "DELETE FROM employees WHERE employeeId = ?";
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, employeeId);
+		
+			// Execute SQL statement
 			ps.executeUpdate();
 			System.out.println("Employee " + employeeId + " removed!");
+			
 		} catch (SQLException e) {
 			System.out.println("Failed to remove Employee " + employeeId);
 		}	
@@ -111,6 +138,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			ps = con.prepareStatement(sql);
 			ps.executeUpdate();
 			System.out.println("Employee Table Created!");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

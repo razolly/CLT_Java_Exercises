@@ -1,6 +1,9 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import model.Employee;
@@ -66,7 +69,10 @@ public class EmployeeController {
 		sc.nextLine();	// Clear buffer
 		
 		// Pass EmployeeID to service to search in database
-		service.invokeGetEmployeeById(employeeId);
+		Employee employee = service.invokeGetEmployeeById(employeeId);
+		
+		// Display employee details
+		displayEmployeeDetails(Arrays.asList(employee));
 	}
 	
 	private void updateEmployee() {
@@ -145,5 +151,39 @@ public class EmployeeController {
 		// Create scanner
 		sc = new Scanner(System.in);
 	}
+	
+	/* 
+	 * Displays a list of Employees in a table 
+	 */
+	private void displayEmployeeDetails(List<Employee> employees) {
+		
+		System.out.println("\nEmployee ID\tName\t\t\tPassword\t\tDate of Birth");
+		System.out.println("===================================================================================");
+		
+		for(Employee e: employees) {
+			System.out.println(e.getEmployeeId() + "\t\t" 
+							+ e.getEmployeeName() + "\t\t" 
+							+ e.getPassword() + "\t\t" 
+							+ e.getDateOfBirth());
+		}
+		
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
