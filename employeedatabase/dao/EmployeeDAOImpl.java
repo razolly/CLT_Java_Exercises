@@ -54,8 +54,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		// Create SQL statement to update employee
+		
+		String sql = "UPDATE employees SET employeeName = '" 
+				+ employee.getEmployeeName() + "', password = '" 
+				+ employee.getPassword() + "', dateOfBirth = '" 
+				+ employee.getDateOfBirth() + "' WHERE employeeId = " 
+				+ employee.getEmployeeId();
 
+		try {
+			// Execute SQL statement
+			st = con.createStatement();
+			st.executeUpdate(sql);
+			System.out.println("Employee " + employee.getEmployeeName() + " updated!");
+			
+		} catch (SQLException e) {
+			System.out.println("Failed to update Employee " + employee.getEmployeeName());
+		}	
+		
 	}
 
 	@Override
@@ -72,7 +88,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void removeEmployee(int employeeId) {
-		// Create SQL statement to delete database
+		// Create SQL statement to delete employee
 		String sql = "DELETE FROM employees WHERE employeeId = " + employeeId;
 		try {
 			// Execute SQL statement

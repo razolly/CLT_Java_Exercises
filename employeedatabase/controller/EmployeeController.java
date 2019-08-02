@@ -59,12 +59,32 @@ public class EmployeeController {
 		
 		// Get ID
 		System.out.print("\nEnter employee ID: ");
-		int employeeId = sc.nextInt();
+		int newEmployeeId = sc.nextInt();
 		sc.nextLine();	// Clear buffer
 		
-		// Find employee by id
+		// TODO method for DAO doesEmployeeExist
 		
-		// Update all fields
+		// Get new Name
+		System.out.print("Enter new employee name: ");
+		String newEmployeeName = sc.nextLine();
+
+		// Get new Password
+		System.out.print("Enter new employee password: ");
+		String newEmployeePassword = sc.next();
+
+		// Get new Date of Birth
+		System.out.print("Enter new employee date of birth (DD/MM/YYYY): ");
+		String newEmployeeDOB = sc.next();
+		
+		// Create Employee object and store values
+		Employee employee = new Employee();
+		employee.setEmployeeId(newEmployeeId);
+		employee.setEmployeeName(newEmployeeName);
+		employee.setPassword(newEmployeePassword);
+		employee.setDateOfBirth(newEmployeeDOB);
+		
+		// Find and update employee 
+		service.invokeUpdateEmployee(employee);
 	}
 
 	private void addEmployee() {

@@ -23,6 +23,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public void invokeUpdateEmployee(Employee employee) {
+		
+		dao.updateEmployee(employee);
+	}
+	
+	@Override
 	public void invokeRemoveEmployee(int employeeId) {
 
 		dao.removeEmployee(employeeId);
