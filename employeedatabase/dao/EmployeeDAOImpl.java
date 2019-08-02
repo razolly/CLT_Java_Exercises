@@ -12,6 +12,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	DBConnection db;
 	Statement st;
+	Connection con;
 	
 	public EmployeeDAOImpl() throws ClassNotFoundException, SQLException {
 		
@@ -19,7 +20,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		db = DBConnection.getInstance();	
 		
 		// Create connection to database
-		Connection con = db.prepareConnection();	
+		con = db.prepareConnection();	
 		
 //		// Creating an Employee table
 //		System.out.println("Creating Employee Table");
@@ -52,6 +53,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					+ "')";
 		try {
 			// Execute SQL statement
+			st = con.createStatement();
 			st.executeUpdate(sql);
 			System.out.println(employeeName + " inserted!");
 		} catch (SQLException e) {

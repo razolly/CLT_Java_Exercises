@@ -27,7 +27,7 @@ public class EmployeeController {
 
 		// Get Name
 		System.out.print("Enter employee name: ");
-		String employeeName = sc.next();
+		String employeeName = sc.nextLine();
 
 		// Get Password
 		System.out.print("Enter employee password: ");
@@ -62,7 +62,6 @@ public class EmployeeController {
 
 		// Create scanner
 		sc = new Scanner(System.in);
-		sc.nextLine();	// Clear buffer
 	}
 
 }
