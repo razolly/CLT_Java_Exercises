@@ -21,10 +21,56 @@ public class EmployeeController {
 		System.out.println("=======================================");
 		System.out.println("Welcome to Optimum Solutions Admin!");
 		System.out.println("=======================================");
-		System.out.println("Add an employee: ");
+		System.out.println("Select option: ");
+		System.out.println("1) Add an employee");
+		System.out.println("2) Update an employee");
+		System.out.println("3) Delete an employee");
+		System.out.print("\nYour choice: ");
+		
+		int userChoice = sc.nextInt();
+		
+		switch (userChoice) {
+		
+		case 1: addEmployee();
+			break;
+		case 2: updateEmployee();
+			break;
+		case 3: removeEmployee();
+			break;
+		default:
+			break;
+		}
 
+	}
+
+	private void removeEmployee() {
+		
 		// Get ID
-		System.out.print("Enter employee ID: ");
+		System.out.print("\nEnter employee ID: ");
+		int employeeId = sc.nextInt();
+		sc.nextLine();	// Clear buffer
+		
+		// Pass EmployeeID to service to delete from database
+		service.invokeRemoveEmployee(employeeId);
+		
+	}
+	
+	private void updateEmployee() {
+		
+		// Get ID
+		System.out.print("\nEnter employee ID: ");
+		int employeeId = sc.nextInt();
+		sc.nextLine();	// Clear buffer
+		
+		// Find employee by id
+		
+		// Update all fields
+	}
+
+	private void addEmployee() {
+		
+		// Get ID
+		System.out.print("\nEnter employee ID: ");
 		int employeeId = sc.nextInt();
 		sc.nextLine();	// Clear buffer
 
@@ -48,8 +94,7 @@ public class EmployeeController {
 		employee.setDateOfBirth(employeeDOB);
 		
 		// Pass Employee to service to store in database
-		service.addEmployee(employee);
-
+		service.invokeAddEmployee(employee);
 	}
 
 	private void initializeComponents() {
