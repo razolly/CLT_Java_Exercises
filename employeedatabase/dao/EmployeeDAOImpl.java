@@ -83,7 +83,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			
 			// List to hold Employees
 			List<Employee> listOfEmployee = new ArrayList<Employee>();
-			rs.next();	// Position cursor to first row of ResultSet before reading
 			
 			// Extract values from result set and store in List
 			while (rs.next()) {
