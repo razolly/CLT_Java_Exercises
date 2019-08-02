@@ -24,7 +24,8 @@ public class EmployeeController {
 		System.out.println("Select option: ");
 		System.out.println("1) Add an employee");
 		System.out.println("2) Update an employee");
-		System.out.println("3) Delete an employee");
+		System.out.println("3) Get employee by ID");
+		System.out.println("4) Delete an employee");
 		System.out.print("\nYour choice: ");
 		
 		int userChoice = sc.nextInt();
@@ -35,7 +36,9 @@ public class EmployeeController {
 			break;
 		case 2: updateEmployee();
 			break;
-		case 3: removeEmployee();
+		case 3: getEmployeeById();
+			break;
+		case 4: removeEmployee();
 			break;
 		default:
 			break;
@@ -55,6 +58,17 @@ public class EmployeeController {
 		
 	}
 	
+	private void getEmployeeById() {
+		
+		// Get ID
+		System.out.print("\nEnter employee ID: ");
+		int employeeId = sc.nextInt();
+		sc.nextLine();	// Clear buffer
+		
+		// Pass EmployeeID to service to search in database
+		service.invokeGetEmployeeById(employeeId);
+	}
+	
 	private void updateEmployee() {
 		
 		// Get ID
@@ -62,7 +76,7 @@ public class EmployeeController {
 		int newEmployeeId = sc.nextInt();
 		sc.nextLine();	// Clear buffer
 		
-		// TODO method for DAO doesEmployeeExist
+		// TODO check if employee exists using getEmployeeById
 		
 		// Get new Name
 		System.out.print("Enter new employee name: ");

@@ -8,6 +8,8 @@ public interface EmployeeService {
 
 	void invokeUpdateEmployee(Employee employee);
 	
+	Employee invokeGetEmployeeById(int employeeId);
+	
 	void invokeRemoveEmployee(int employeeId);
 	
 }
