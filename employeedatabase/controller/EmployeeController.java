@@ -35,18 +35,18 @@ public class EmployeeController {
 		
 		switch (userChoice) {
 		
-		case 1: addEmployee();
-			break;
-		case 2: updateEmployee();
-			break;
-		case 3: getEmployeeById();
-			break;
-		case 4: getAllEmployees();
-			break;
-		case 5: removeEmployee();
-			break;
-		default:
-			break;
+			case 1: addEmployee();
+				break;
+			case 2: updateEmployee();
+				break;
+			case 3: getEmployeeById();
+				break;
+			case 4: getAllEmployees();
+				break;
+			case 5: removeEmployee();
+				break;
+			default: System.out.println("Invalid input!");
+				break;
 		}
 
 	}
@@ -87,32 +87,39 @@ public class EmployeeController {
 		
 		// Get ID
 		System.out.print("\nEnter employee ID: ");
-		int newEmployeeId = sc.nextInt();
+		int employeeId = sc.nextInt();
 		sc.nextLine();	// Clear buffer
 		
-		// TODO check if employee exists using getEmployeeById
+		// Check if employee exists using getEmployeeById
+		// If doesn't exist, it should return null
+		// If exists, update info
+		if (service.invokeGetEmployeeById(employeeId) != null) {
+			
+			// Get new Name
+			System.out.print("Enter new employee name: ");
+			String newEmployeeName = sc.nextLine();
+			
+			// Get new Password
+			System.out.print("Enter new employee password: ");
+			String newEmployeePassword = sc.next();
+			
+			// Get new Date of Birth
+			System.out.print("Enter new employee date of birth (DD/MM/YYYY): ");
+			String newEmployeeDOB = sc.next();
+			
+			// Create Employee object and store values
+			Employee employee = new Employee();
+			employee.setEmployeeId(employeeId);
+			employee.setEmployeeName(newEmployeeName);
+			employee.setPassword(newEmployeePassword);
+			employee.setDateOfBirth(newEmployeeDOB);
+			
+			// Find and update employee 
+			service.invokeUpdateEmployee(employee);
 		
-		// Get new Name
-		System.out.print("Enter new employee name: ");
-		String newEmployeeName = sc.nextLine();
-
-		// Get new Password
-		System.out.print("Enter new employee password: ");
-		String newEmployeePassword = sc.next();
-
-		// Get new Date of Birth
-		System.out.print("Enter new employee date of birth (DD/MM/YYYY): ");
-		String newEmployeeDOB = sc.next();
-		
-		// Create Employee object and store values
-		Employee employee = new Employee();
-		employee.setEmployeeId(newEmployeeId);
-		employee.setEmployeeName(newEmployeeName);
-		employee.setPassword(newEmployeePassword);
-		employee.setDateOfBirth(newEmployeeDOB);
-		
-		// Find and update employee 
-		service.invokeUpdateEmployee(employee);
+		} else {
+			System.out.println("Sorry! Employee " + employeeId + " does not exist!");
+		}
 	}
 
 	private void addEmployee() {
@@ -150,9 +157,7 @@ public class EmployeeController {
 		// Create service
 		try {
 			service = new EmployeeServiceImpl();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
