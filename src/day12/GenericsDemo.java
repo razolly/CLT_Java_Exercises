@@ -18,8 +18,6 @@ public class GenericsDemo {
 		// Get the Object from the list and cast as Integer
 		Integer number1 = (Integer) list.iterator().next();
 		
-		
-		
 		// To make it simpler, we can specify a data type that the List can hold
 		List<Integer> newList = new LinkedList<>();
 		
