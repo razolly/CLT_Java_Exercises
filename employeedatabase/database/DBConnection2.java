@@ -13,7 +13,7 @@ public class DBConnection2 {
 		
 		Connection con = null;
 		FileReader reader = null;
-		Properties prop = new Properties();
+		Properties prop = new Properties();		// To hold properties from text file
 		
 		try {
 			reader = new FileReader("db.properties");
@@ -22,7 +22,7 @@ public class DBConnection2 {
 			prop.load(reader);
 			
 			// Load the driver class
-			Class.forName(prop.getProperty("db_driver_class"));
+			Class.forName(prop.getProperty("db_driver_class"));		// This key can be anything
 			
 			// Create the connection
 			con = DriverManager.getConnection(
