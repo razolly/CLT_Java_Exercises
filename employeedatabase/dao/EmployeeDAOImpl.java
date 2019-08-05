@@ -23,7 +23,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		// db = DBConnection.getInstance();
 		
 		// Create connection to database
-		con = DBConnection2.myConnection();	
+		con = DBConnection2.myConnection();
 		
 		// TODO close the connection
 		
