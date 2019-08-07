@@ -26,6 +26,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		con = db.prepareConnection();	
 		// TODO close the connection
 		
+		// Some comment
+		System.out.println("Random comment");
+		
 		// createEmployeeTable();	Table only needs to be created once
 	}
 
