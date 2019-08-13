@@ -1,59 +1,123 @@
 SQL Exercise
-1.	SELECT * FROM salesman;
-2.	SELECT name, commission FROM salesman;
-3.	SELECT name, city FROM salesman WHERE city = 'Paris';
-4.	SELECT salesman_id, name, city, commission FROM salesman WHERE commission > 0.10 AND commission < 0.12;
-5.	SELECT * FROM salesman WHERE city in ('Paris', 'Rome');
-6.	..
-7.	SELECT * FROM salesman WHERE city NOT LIKE 'Paris' AND city NOT LIKE 'Rome';
-8.	SELECT * FROM salesman WHERE commission BETWEEN 0.12 AND 0.14;
-9.	SELECT * FROM salesman WHERE name LIKE ‘[A-K]%’;
-DOESNT WORK
-10.	SELECT * FROM salesman WHERE name NOT LIKE ‘[A-L]%’;
-NOT WORKING
-11.	SELECT * FROM salesman WHERE name LIKE ‘N__L%’;
+1
+	SELECT * FROM salesman;
+2
+	SELECT name, commission FROM salesman;
+3
+	SELECT name, city FROM salesman WHERE city = 'Paris';
+4
+	SELECT salesman_id, 
+	       NAME, 
+	       city, 
+	       commission 
+	FROM   salesman 
+	WHERE  commission > 0.10 
+	       AND commission < 0.12; 
+5 
+	SELECT * 
+	FROM   salesman 
+	WHERE  city IN ( 'Paris', 'Rome' ); 
+6
+
+7
+	SELECT * 
+	FROM   salesman 
+	WHERE  city NOT LIKE 'Paris' 
+	       AND city NOT LIKE 'Rome'; 
+8
+	SELECT * 
+	FROM   salesman 
+	WHERE  commission BETWEEN 0.12 AND 0.14; 
+9
+	SELECT * FROM salesman WHERE name LIKE ‘[A-K]%’;
+	DOESNT WORK
+10
+	SELECT * FROM salesman WHERE name NOT LIKE ‘[A-L]%’;
+	NOT WORKING
+11
+	SELECT * FROM salesman WHERE name LIKE ‘N__L%’;
 12
-SELECT CONCAT(commission, ‘%’) AS commission, salesman_id, name, city FROM salesman;
+	SELECT Concat(commission, ‘%’) AS commission, 
+	       salesman_id, 
+	       NAME, 
+	       city 
+	FROM   salesman; 
 
 Exercise 2
-1.	SELECT ord_date, salesman_id, ord_no, purch_amt FROM orders;
-2.	SELECT DISTINCT salesman_id, ord_no FROM orders;
-NOT WORKING
-3.	SELECT ord_no, ord_date, purch_amt FROM orders WHERE salesman_id = 5001;
-4.	SELECT * FROM orders WHERE (ord_date != '2012-09-10' AND salesman_id < 5005) OR purch_amt < 1000;
+1
+	SELECT ord_date, salesman_id, ord_no, purch_amt FROM orders;
+2
+	SELECT DISTINCT salesman_id, ord_no FROM orders;
+	NOT WORKING
+3
+	SELECT ord_no, ord_date, purch_amt FROM orders WHERE salesman_id = 5001;
+4
+	SELECT * 
+	FROM   orders 
+	WHERE  ( ord_date != '2012-09-10' 
+	         AND salesman_id < 5005 ) 
+	        OR purch_amt < 1000; 
 5
-SELECT * FROM clt6.orders WHERE purch_amt < 1000
-SELECT * FROM clt6.orders WHERE ord_date < '2012-10-01';
-SELECT * FROM clt6.orders WHERE customer_id BETWEEN 3003 AND 3007;
+	SELECT * FROM clt6.orders WHERE purch_amt < 1000
+	SELECT * FROM clt6.orders WHERE ord_date < '2012-10-01';
+	SELECT * FROM clt6.orders WHERE customer_id BETWEEN 3003 AND 3007;
 6
-SELECT * FROM orders WHERE ord_date = '2012-10-05' OR customer_id > 3005 AND purch_amt < 1000 ORDER BY ord_no DESC;
+	SELECT * 
+	FROM   orders 
+	WHERE  ord_date = '2012-10-05' 
+	        OR customer_id > 3005 
+	           AND purch_amt < 1000 
+	ORDER  BY ord_no DESC; 
 7
-??
-??
+	??
+	??
 8
-SELECT * FROM orders WHERE purch_amt BETWEEN 500 AND 4000 AND purch_amt NOT IN (948.5, 1983.43);
+	SELECT * 
+	FROM   orders 
+	WHERE  purch_amt BETWEEN 500 AND 4000 
+	       AND purch_amt NOT IN ( 948.5, 1983.43 ); 
 9
-SELECT SUM(purch_amt) FROM clt6.orders;
+	SELECT SUM(purch_amt) FROM clt6.orders;
 10 
-SELECT AVG(purch_amt) FROM clt6.orders;
+	SELECT AVG(purch_amt) FROM clt6.orders;
 11
-SELECT COUNT(salesman_id) FROM clt6.orders;
+	SELECT COUNT(salesman_id) FROM clt6.orders;
 12
-SELECT MAX(purch_amt) FROM clt6.orders;
+	SELECT MAX(purch_amt) FROM clt6.orders;
 13
-SELECT MIN(purch_amt) FROM clt6.orders;
+	SELECT MIN(purch_amt) FROM clt6.orders;
 14
-SELECT customer_id, MAX(purch_amt) FROM clt6.orders GROUP BY customer_id;
+	SELECT customer_id, 
+       Max(purch_amt) 
+	FROM   clt6.orders 
+	GROUP  BY customer_id; 
 15
-SELECT customer_id, ord_date, purch_amt FROM clt6.orders WHERE ord_date = '2012-09-10' ORDER BY purch_amt DESC;
+	SELECT customer_id, 
+	       ord_date, 
+	       purch_amt 
+	FROM   clt6.orders 
+	WHERE  ord_date = '2012-09-10' 
+	ORDER  BY purch_amt DESC; 
 16
 SELECT MAX(purch_amt), salesman_id FROM clt6.orders WHERE ord_date = '2012-08-17';
 17
 SELECT customer_id, MAX(purch_amt), ord_date FROM clt6.orders WHERE purch_amt > 2000 GROUP BY customer_id;
 18
-SELECT customer_id, MAX(purch_amt), ord_date FROM clt6.orders WHERE purch_amt BETWEEN 2000 AND 6000 GROUP BY customer_id LIMIT 0, 1000;
+	SELECT customer_id, 
+	       Max(purch_amt), 
+	       ord_date 
+	FROM   clt6.orders 
+	WHERE  purch_amt BETWEEN 2000 AND 6000 
+	GROUP  BY customer_id 
+	LIMIT  0, 1000; 
 19
-SELECT customer_id, MAX(purch_amt), ord_date FROM clt6.orders WHERE (purch_amt BETWEEN 2000 AND 3000) OR (purch_amt BETWEEN 5760 AND 6000) GROUP BY customer_id;
+	SELECT customer_id, 
+	       Max(purch_amt), 
+	       ord_date 
+	FROM   clt6.orders 
+	WHERE  ( purch_amt BETWEEN 2000 AND 3000 ) 
+	        OR ( purch_amt BETWEEN 5760 AND 6000 ) 
+	GROUP  BY customer_id; 
 20
 SELECT customer_id, MAX(purch_amt) FROM clt6.orders WHERE customer_id BETWEEN 3002 AND 3007 GROUP BY customer_id;
 21
@@ -68,41 +132,32 @@ Paper said to count CITY?
 25
 SELECT ord_date, COUNT(salesman_id) FROM clt6.orders GROUP BY ord_date;
 26
-SELECT 
-    CONCAT('For ',
-            order_date,
-            ' there were ',
-            order_count,
-            ' orders') AS 'Order Count'
-FROM
-    (SELECT 
-        ord_date AS order_date, COUNT(ord_no) AS order_count
-    FROM
-        clt6.orders
-    GROUP BY ord_date) AS SUBQUERY
+SELECT Concat('For ', order_date, ' there were ', order_count, ' orders') AS 
+       'Order Count' 
+FROM   (SELECT ord_date      AS order_date, 
+               Count(ord_no) AS order_count 
+        FROM   clt6.orders 
+        GROUP  BY ord_date) AS SUBQUERY 
 27
 SELECT * FROM clt6.orders ORDER BY ord_no;
 28
 SELECT * FROM clt6.orders ORDER BY ord_date DESC;
 29
 SELECT * FROM clt6.orders ORDER BY ord_date, purch_amt DESC;
- 
 30
-SELECT 
-	salesman_id as 'Salesman ID', 
-	ord_date as 'Order Date',  
-	MAX(purch_amt) as 'Max Purchase Amount'
-FROM clt6.orders 
-GROUP BY ord_date
-ORDER BY salesman_id, ord_date;
- 
-
+SELECT salesman_id    AS 'Salesman ID', 
+       ord_date       AS 'Order Date', 
+       Max(purch_amt) AS 'Max Purchase Amount' 
+FROM   clt6.orders 
+GROUP  BY ord_date 
+ORDER  BY salesman_id, 
+          ord_date; 
 31
-SELECT customer_id AS 'Customer ID', 
-	COUNT(customer_id) AS 'Number of Orders', 
-	MAX(purch_amt) AS 'Biggest Purchase'
-FROM clt6.orders 
-GROUP BY customer_id;
+SELECT customer_id        AS 'Customer ID', 
+       Count(customer_id) AS 'Number of Orders', 
+       Max(purch_amt)     AS 'Biggest Purchase' 
+FROM   clt6.orders 
+GROUP  BY customer_id; 
  
 
 
