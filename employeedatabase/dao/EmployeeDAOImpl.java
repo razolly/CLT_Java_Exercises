@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DBConnection;
+import database.DBConnection2;
 import model.Employee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,18 +14,26 @@ import java.sql.ResultSet;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
-	DBConnection db;
+	DBConnection2 db;
+	Statement st;	// PreparedStatement has better performance
+	//DBConnection db;
 	PreparedStatement ps;	
 	Connection con;
 	
 	public EmployeeDAOImpl() throws ClassNotFoundException, SQLException {
 		
 		// Get singleton for connecting to database
-		db = DBConnection.getInstance();	
+		
+		// TODO uncomment this
+		// db = DBConnection.getInstance();
 		
 		// Create connection to database
-		con = db.prepareConnection();	
+		con = DBConnection2.myConnection();
+		
 		// TODO close the connection
+		
+		// Some comment
+		System.out.println("Random comment");
 		
 		// createEmployeeTable();	Table only needs to be created once
 	}
