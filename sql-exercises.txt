@@ -155,37 +155,52 @@ Exercise 2
 	customers.
 	SELECT Count(salesman_id) 
 	FROM   clt6.orders;
-12
+	
+12. Write SQL statement to get the maximum purchase amount of all the orders
 	SELECT Max(purch_amt) 
 	FROM   clt6.orders;
-13
+
+13. Write a SOL statement to get the minimum purchase amount of all the orders
 	SELECT Min(purch_amt) 
 	FROM   clt6.orders;
-14
+
+14. Write a SQL statement to find the highest purchase amount ordered by the each
+	customer with their ID and highest purchase amount
 	SELECT customer_id, 
       	   Max(purch_amt) 
 	FROM   clt6.orders 
 	GROUP  BY customer_id; 
-15
+
+15. Write a SQL statement to find the highest purchase amount ordered by the each
+	customer on a particular date with their id, order date and highest purchase
+	amount 
 	SELECT customer_id, 
 	       ord_date, 
 	       purch_amt 
 	FROM   clt6.orders 
 	WHERE  ord_date = '2012-09-10' 
 	ORDER  BY purch_amt DESC; 
-16
+
+16. Write a SQL statement to find the highest purchase amount on date "2012-08-17 for 
+	each salesman with their ID.
 	SELECT Max(purch_amt), 
 	       salesman_id 
 	FROM   clt6.orders 
 	WHERE  ord_date = '2012-08-17'; 
-17
+	
+17. Write a SQL statement to find the highest purchase amount with the
+	date, for only those customers who have highest purchase amount in a day is more
+	than 2000
 	SELECT customer_id, 
 	       Max(purch_amt), 
 	       ord_date 
 	FROM   clt6.orders 
 	WHERE  purch_amt > 2000 
 	GROUP  BY customer_id; 
-18
+
+18. Write a SQL statement to find the highest purchase amount with their ID and order
+	date, for those customers who have a higher purchase amount in a day is within the
+	range 2000 and 6000
 	SELECT customer_id, 
 	       Max(purch_amt), 
 	       ord_date 
@@ -193,67 +208,94 @@ Exercise 2
 	WHERE  purch_amt BETWEEN 2000 AND 6000 
 	GROUP  BY customer_id 
 	LIMIT  0, 1000; 
-19
+
+19. Write a SQL statement to find the highest purchase amount with their ID and order
+	date, for only those customers who have a higher purchase amount in a day is within
+	the list 2000, 3000, 5760 and 6000
 	SELECT customer_id, 
 	       Max(purch_amt), 
 	       ord_date 
 	FROM   clt6.orders 
 	WHERE  ( purch_amt BETWEEN 2000 AND 3000 ) 
 	        OR ( purch_amt BETWEEN 5760 AND 6000 ) 
-	GROUP  BY customer_id; 
-20
+	GROUP  BY customer_id;
+	 
+20. Write a SQL statement to find the highest purchase amount with their ID, for only
+	those customers whose ID is within the range 3002 and 3007
 	SELECT customer_id, 
 	       Max(purch_amt) 
 	FROM   clt6.orders 
 	WHERE  customer_id BETWEEN 3002 AND 3007 
 	GROUP  BY customer_id; 	
-21
+
+21. Write a SQL statement to display customer details (ID and purchase amount) whose
+	IDs are within the range 3002 and 3007 and highest purchase amount is more than
+	1000
 	SELECT customer_id, 
 	       purch_amt 
 	FROM   clt6.orders 
 	WHERE  customer_id BETWEEN 3002 AND 3007 
 	       AND purch_amt > 1000 
 	GROUP  BY customer_id; 
-22
+
+22. Write a SQL statement to find the highest purchase amount with their ID for only
+	those salesmen whose ID is within the range 5003 and 5008	
 	SELECT salesman_id, 
 	       Max(purch_amt) 
 	FROM   clt6.orders 
 	WHERE  salesman_id BETWEEN 5003 AND 5008 
 	GROUP  BY purch_amt; 
-23
+	
+23. Write a SQL statement that counts all orders for a date August 17th, 2012
 	SELECT Count(ord_date) 
 	FROM   clt6.orders 
 	WHERE  ord_date = '2012-08-17';
-24
+
+24. Write a SQL statement that counts the number of different non NULL city values for
+	salesmen.
 	SELECT Count(salesman_id) 
 	FROM   clt6.orders 
 	WHERE  salesman_id IS NOT NULL;Paper said TO count city? 
-25
+
+25. Write a query that counts the number of salesmen with their order date and ID
+	registering orders for each day
 	SELECT   ord_date, 
 	         Count(salesman_id) 
 	FROM     clt6.orders 
 	GROUP BY ord_date;
-26
+
+26. Write a SQL statement to find out the number of orders booked for each day and
+	display it in such a format like "For 2001-10-10 there are 15 orders"
 	SELECT Concat('For ', order_date, ' there were ', order_count, ' orders') AS 
 	       'Order Count' 
 	FROM   (SELECT ord_date      AS order_date, 
 	               Count(ord_no) AS order_count 
 	        FROM   clt6.orders 
 	        GROUP  BY ord_date) AS SUBQUERY 
-27
+
+27. Write a query to display the orders according to the order number arranged by
+	ascending order
 	SELECT   * 
 	FROM     clt6.orders 
 	ORDER BY ord_no;
-28
+
+28. Write a SQL statement to arrange the orders according to the order date in such a
+	manner that the latest date will come first then previous dates
 	SELECT   * 
 	FROM     clt6.orders 
 	ORDER BY ord_date DESC;
-29
+	
+29. Write a SQL statement to display the orders with all information in such a manner
+	that, the older order date will come first and the highest purchase amount of same
+	day will come first
 	SELECT   * 
 	FROM     clt6.orders 
 	ORDER BY ord_date, 
 	         purch_amt DESC;
-30
+	         
+30. Write a SQL statement to make a report with salesman ID, order date and hughes
+	purchase amount in such an arrangement that, the smallest salesman ID will come
+	first along with their smallest order date
 	SELECT   salesman_id    AS 'Salesman ID', 
 	         ord_date       AS 'Order Date', 
 	         Max(purch_amt) AS 'Max Purchase Amount' 
@@ -261,7 +303,10 @@ Exercise 2
 	GROUP BY ord_date 
 	ORDER BY salesman_id, 
 	         ord_date;
-31
+	         
+31. Write a SQL statement to make a report with customer ID in such a manner the
+	largest number of orders booked by the customer will come first along with th
+	highest purchase amount
 	SELECT   customer_id        AS 'Customer ID', 
 	         Count(customer_id) AS 'Number of Orders', 
 	         Max(purch_amt)     AS 'Biggest Purchase' 
@@ -271,347 +316,277 @@ Exercise 2
 
 
 Exercise - Customer table
-1
+
+1. Write a SQL statement to display all the information for those customers with a
+	grade of 200
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  grade = 200;
-2
+
+2. Write a query to display all customers with a grade above 100.
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  grade > 100;
-3
+	
+3. Write a query statement to display all customers New York who have a grade
+	value above 100
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  city = 'New York' 
 	AND    grade > 100;
-4
+	
+4. Write a SQL statement to display all customers, who are either belongs to the city
+	New York or had a grade above 100
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  city = 'New York' 
 	OR     grade > 100;
-5
+	
+5. Write a SQL statement to display all the customers, who are either belongs to the
+	city New York or not had a grade above 100
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  city = 'New York' 
 	OR     NOT grade > 100;
-6
+	
+6. Write a SQL query to display those customers who are neither belongs to the city
+	New York nor grade value is more than 100
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  NOT ( 
 	              city = 'New York' 
 	       OR     grade > 100);
-7
+
+7. Write a query to sort out those customers with all information whose ID value is
+	within any of 3007, 3008 and 3009.
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  customer_id IN (3007, 
 	                       3008, 
 	                       3009);
-8
+	                       
+8. Write a SQL statement to find that customer with all information who does not get
+	any grade except NULL
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  grade IS NULL;
-9
+	
+9. Write a SQL statement to find that customer with all information who gets a grade
+	except NULL value
 	SELECT * 
 	FROM   clt6.customer 
 	WHERE  grade IS NOT NULL;
-10
+	
+10. Write a SQL statement know how many customer have listed their names.
 	SELECT Count(cust_name) 
 	FROM   clt6.customer;
  
-11
-Not sure what grade to look for
-SELECT Count(cust_name) 
-FROM   clt6.customer 
-WHERE  grade >= 200;12SELECT   city       AS 'City', 
-         Max(grade) AS 'Highest Grade' 
-FROM     clt6.customer 
-GROUP BY city;
+11. Write a SQL statement find the number of customers who gets at least a gradation
+	for his/her performance.
+	Not sure what grade to look for
+	SELECT Count(cust_name) 
+	FROM   clt6.customer 
+	WHERE  grade >= 200;12SELECT   city       AS 'City', 
+	         Max(grade) AS 'Highest Grade' 
+	FROM     clt6.customer 
+	GROUP BY city;
 
-12
-SELECT 
-    city, MAX(grade)
-FROM
-    clt6.customer
-GROUP BY city;
+12. Write a SQL statement which selects the highest grade for each of the cities of the
+	customers.
+	SELECT 
+	    city, MAX(grade)
+	FROM
+	    clt6.customer
+	GROUP BY city;
  
-
-
-13
-SELECT 
-    customer_id, cust_name, city, grade
-FROM
-    clt6.customer
-ORDER BY customer_id;
+13. Write a SQL statement to display the customer name, city, and grade, etc. and the
+	display will be arranged according to the smallest customer ID.
+	SELECT 
+	    customer_id, cust_name, city, grade
+	FROM
+	    clt6.customer
+	ORDER BY customer_id;
  
-
-
-
-
-
-
-
-
-
-
 
 SQL – Join Exercises
-1
-SELECT salesman.city AS 'city',salesman.NAME AS 'Salesman', 
-       customer.cust_name AS 'Customer' 
-FROM   clt6.salesman 
-       INNER JOIN clt6.customer using (city); 
+
+1. Write a SQL statement to prepare a list with salesman name, customer name and
+	their cities for the salesmen and customer who belongs to the same city. [refer
+	Salesman and customer]
+	SELECT salesman.city AS 'city',salesman.NAME AS 'Salesman', 
+	       customer.cust_name AS 'Customer' 
+	FROM   clt6.salesman 
+	       INNER JOIN clt6.customer using (city); 
  
-2
-SELECT orders.ord_no,orders.purch_amt,customer.cust_name,customer.city 
-FROM   clt6.orders,clt6.customer 
-WHERE  clt6.orders.customer_id = clt6.customer.customer_id 
-       AND purch_amt BETWEEN 500 AND 2000; 
-
- 
-3
-SELECT customer.cust_name,salesman.NAME 
-FROM   clt6.customer 
-       LEFT OUTER JOIN clt6.salesman using (salesman_id); 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-4
-SELECT customer.cust_name 
-FROM   clt6.customer,clt6.salesman 
-WHERE  salesman.salesman_id = customer.salesman_id 
-       AND customer.salesman_id IS NOT NULL 
-       AND salesman.commission > 0.12; 
- 
-
-
-
-
-
-
-
-
-
-
-5
-SELECT customer.cust_name 
-FROM   clt6.customer,clt6.salesman 
-WHERE  salesman.salesman_id = customer.salesman_id 
-       AND customer.salesman_id IS NOT NULL 
-       AND customer.city != salesman.city 
-       AND salesman.commission > 0.12; 
+2.  Write a SQL statement to make a list with order no, purchase amount, customer
+	name and their cities for those orders which order amount between 500 and 2000
+	[refer Salesman and customer]
+	SELECT orders.ord_no,orders.purch_amt,customer.cust_name,customer.city 
+	FROM   clt6.orders,clt6.customer 
+	WHERE  clt6.orders.customer_id = clt6.customer.customer_id 
+	       AND purch_amt BETWEEN 500 AND 2000; 
 
  
-
-
-
-
-
-
-
-
-
-
-6
-SELECT orders.ord_no,orders.ord_date,orders.purch_amt,customer.cust_name, 
-       salesman.NAME AS 'Salesman Name',salesman.commission 
-FROM   clt6.orders,clt6.customer,clt6.salesman 
-WHERE  orders.customer_id = customer.customer_id 
-       AND orders.salesman_id = salesman.salesman_id 
+3. Write a SQL statement to know which salesman are working for which customer
+	[refer customer and salesman]
+	SELECT customer.cust_name,salesman.NAME 
+	FROM   clt6.customer 
+	       LEFT OUTER JOIN clt6.salesman using (salesman_id); 
  
-
-
-
-
-
-7
-SELECT customer.customer_id,salesman.city,orders.salesman_id 
-FROM   clt6.orders,clt6.customer,clt6.salesman 
-WHERE  customer.customer_id = orders.customer_id 
-       AND salesman.city = customer.city 
-       AND ( orders.salesman_id = customer.salesman_id 
-             AND customer.salesman_id = salesman.salesman_id ) 
+4. Write a SQL statement to find the list of customers who appointed a salesman for
+	their jobs who gets a commission from the company is more than 12%, [refer
+	customer and Salesman]
+	SELECT customer.cust_name 
+	FROM   clt6.customer,clt6.salesman 
+	WHERE  salesman.salesman_id = customer.salesman_id 
+	       AND customer.salesman_id IS NOT NULL 
+	       AND salesman.commission > 0.12; 
  
+5. Write a SQL statement to find the list of customers who appointed a salesman for
+	their jobs who does not live in the same city where their customer lives, and gets a
+	commission is above 12% [refer customer and Salesman]
+	SELECT customer.cust_name 
+	FROM   clt6.customer,clt6.salesman 
+	WHERE  salesman.salesman_id = customer.salesman_id 
+	       AND customer.salesman_id IS NOT NULL 
+	       AND customer.city != salesman.city 
+	       AND salesman.commission > 0.12; 
 
-
-
-
-
-
-
-
-
-
-8
-SELECT customer.customer_id,customer.cust_name AS 'Customer Name', 
-       salesman.NAME AS 'Salesman Name' 
-FROM   clt6.customer 
-       LEFT OUTER JOIN clt6.salesman 
-                    ON customer.salesman_id = salesman.salesman_id 
-ORDER  BY customer.customer_id 
+6. Write a SQL statement to find the details of a order Le. order number, order date,
+	amount of order, which customer gives the order and which salesman works for that
+	customer and how much commission he gets for an order [ refer order, customer
+	and salesman]
+	SELECT orders.ord_no,orders.ord_date,orders.purch_amt,customer.cust_name, 
+	       salesman.NAME AS 'Salesman Name',salesman.commission 
+	FROM   clt6.orders,clt6.customer,clt6.salesman 
+	WHERE  orders.customer_id = customer.customer_id 
+	       AND orders.salesman_id = salesman.salesman_id 
  
-
-
-
-
-
-
-
-
-
-9
-SELECT customer.customer_id,customer.cust_name AS 'Customer Name', 
-       salesman.NAME AS 'Salesman Name',customer.grade 
-FROM   clt6.customer,clt6.salesman 
-WHERE  customer.salesman_id = salesman.salesman_id 
-       AND grade < 300 
-ORDER  BY customer.customer_id 
+7. Write a SQL statement to make a join on the tables salesman, customer and orders
+	in such a form that the same column of each table will appear once and only the
+	relational rows will come. [refer order, customer and salesman]
+	SELECT customer.customer_id,salesman.city,orders.salesman_id 
+	FROM   clt6.orders,clt6.customer,clt6.salesman 
+	WHERE  customer.customer_id = orders.customer_id 
+	       AND salesman.city = customer.city 
+	       AND ( orders.salesman_id = customer.salesman_id 
+	             AND customer.salesman_id = salesman.salesman_id ) 
  
-
-
-
-
-
-
-
-
-
-
-10
-SELECT customer.cust_name,customer.city,orders.ord_no,orders.ord_date, 
-       orders.purch_amt, 
-       salesman.NAME AS 'Salesman Name',salesman.commission 
-FROM   clt6.customer,clt6.salesman,clt6.orders 
-WHERE  orders.customer_id = customer.customer_id 
-       AND orders.salesman_id = salesman.salesman_id 
+8. Write a SQL statement to make a list in ascending order for the customer who works
+	either through a salesman or by own [refer Salesman and customer]
+	SELECT customer.customer_id,customer.cust_name AS 'Customer Name', 
+	       salesman.NAME AS 'Salesman Name' 
+	FROM   clt6.customer 
+	       LEFT OUTER JOIN clt6.salesman 
+	                    ON customer.salesman_id = salesman.salesman_id 
+	ORDER  BY customer.customer_id 
  
-
-
-
-11
-12
-13
-SELECT orders.ord_no,customer.cust_name,salesman.commission 
-FROM   clt6.customer,clt6.salesman,clt6.orders 
-WHERE  customer.customer_id = orders.customer_id 
-       AND salesman.salesman_id = orders.salesman_id 
-       AND customer.grade > 200 
+9. Write a SQL statement to make a list in ascending order for the customer who holds
+	a grade less than 300 and works either through a salesman or by own. [refer
+	Salesman and customer]
+	SELECT customer.customer_id,customer.cust_name AS 'Customer Name', 
+	       salesman.NAME AS 'Salesman Name',customer.grade 
+	FROM   clt6.customer,clt6.salesman 
+	WHERE  customer.salesman_id = salesman.salesman_id 
+	       AND grade < 300 
+	ORDER  BY customer.customer_id 
  
+10. Write a SQL statement to make a report with customer name, city, order number,
+	order date, order amount salesman name and commission to find that either any of
+	the existing customers have placed no order or placed one or more orders by their
+	salesman or by own [ refer order, customer and salesman]
+	SELECT customer.cust_name,customer.city,orders.ord_no,orders.ord_date, 
+	       orders.purch_amt, 
+	       salesman.NAME AS 'Salesman Name',salesman.commission 
+	FROM   clt6.customer,clt6.salesman,clt6.orders 
+	WHERE  orders.customer_id = customer.customer_id 
+	       AND orders.salesman_id = salesman.salesman_id 
+ 
+11. Write a SQL statement to make a list for the salesmen who works either for one or
+	more customer or not yet join under any of the customers who placed either one or
+	more orders or no order to their supplier. [refer order, customer and
+	salesman]
+	
+12. Write a SQL statement to make a list for the salesmen who either work for one or
+	more customers or yet to join any of the customer The customer may have placed
+	either one or more orders on or above order amount 2000 and must have grade
+	not have placed any order to the associated supplier(refer salesman
+	customer and order)
 
-
-
-
-
-
-
-
-
-
+13. Write SQL statement that produces all orders with the order number, customer
+	name, commission rate and earned commission amount for those customers who
+	carry their grade more than 200 and served by an existing salesman, [ refer
+	salesman, customer and order ]
+	SELECT orders.ord_no,customer.cust_name,salesman.commission 
+	FROM   clt6.customer,clt6.salesman,clt6.orders 
+	WHERE  customer.customer_id = orders.customer_id 
+	       AND salesman.salesman_id = orders.salesman_id 
+	       AND customer.grade > 200 
+ 
 
 SQL Union Exercises
-1
-SELECT customer.cust_name,customer.city 
-FROM   clt6.customer 
-WHERE  city = 'London' 
-UNION 
-SELECT salesman.NAME,salesman.city 
-FROM   clt6.salesman 
-WHERE  city = 'London' 
+
+1. Write a query to display all salesmen and customer located in London. [refer
+	customer and salesman]
+	SELECT customer.cust_name,customer.city 
+	FROM   clt6.customer 
+	WHERE  city = 'London' 
+	UNION 
+	SELECT salesman.NAME,salesman.city 
+	FROM   clt6.salesman 
+	WHERE  city = 'London' 
  
-
-
-
-
-
-
-
-
-
-2
-SELECT DISTINCT salesman.name, salesman.city FROM clt6.salesman
+2.  Write a query to display distinct salesman and their cities. [ refer customer and
+	salesman ]
+	SELECT DISTINCT salesman.name, salesman.city FROM clt6.salesman
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3
-SELECT salesman.NAME 
-FROM   clt6.salesman 
-UNION 
-SELECT customer.cust_name 
-FROM   clt6.customer 
+3. Write a query to display all the salesmen and customer involved in this inventory
+	management system. [ refer order and customer ]
+	SELECT salesman.NAME 
+	FROM   clt6.salesman 
+	UNION 
+	SELECT customer.cust_name 
+	FROM   clt6.customer 
  
-
-
-
-
-
-
-
-
-4
-SELECT salesman.salesman_id,salesman.NAME,orders.ord_date, 
-       Max(orders.purch_amt) AS 'MAX, MIN' 
-FROM   clt6.salesman,clt6.orders 
-WHERE  orders.salesman_id = salesman.salesman_id 
-GROUP  BY orders.ord_date 
-UNION 
-SELECT salesman.salesman_id,salesman.NAME,orders.ord_date,Min(orders.purch_amt) 
-FROM   clt6.salesman,clt6.orders 
-WHERE  orders.salesman_id = salesman.salesman_id 
-GROUP  BY orders.ord_date 
-ORDER  BY ord_date 
+4. Write a query to make a report of which salesman produce the largest and smallest
+	orders on each date. (refer order, customer and salesman)
+	SELECT salesman.salesman_id,salesman.NAME,orders.ord_date, 
+	       Max(orders.purch_amt) AS 'MAX, MIN' 
+	FROM   clt6.salesman,clt6.orders 
+	WHERE  orders.salesman_id = salesman.salesman_id 
+	GROUP  BY orders.ord_date 
+	UNION 
+	SELECT salesman.salesman_id,salesman.NAME,orders.ord_date,Min(orders.purch_amt) 
+	FROM   clt6.salesman,clt6.orders 
+	WHERE  orders.salesman_id = salesman.salesman_id 
+	GROUP  BY orders.ord_date 
+	ORDER  BY ord_date 
  
-
-
-
-
-5
-SELECT salesman.salesman_id,salesman.NAME,orders.ord_date,orders.ord_no, 
-       Max(orders.purch_amt) AS 'MAX, MIN' 
-FROM   clt6.salesman,clt6.orders 
-WHERE  orders.salesman_id = salesman.salesman_id 
-GROUP  BY orders.ord_date 
-UNION 
-SELECT salesman.salesman_id,salesman.NAME,orders.ord_date,orders.ord_no, 
-       Min(orders.purch_amt) 
-FROM   clt6.salesman,clt6.orders 
-WHERE  orders.salesman_id = salesman.salesman_id 
-GROUP  BY orders.ord_date 
-ORDER  BY ord_no 
+5. Write a query to make a report of which salesman produce the largest and smallest
+	orders on each date and arranged the orders number in smallest to the largest
+	number [ refer customer and salesman ]
+	SELECT salesman.salesman_id,salesman.NAME,orders.ord_date,orders.ord_no, 
+	       Max(orders.purch_amt) AS 'MAX, MIN' 
+	FROM   clt6.salesman,clt6.orders 
+	WHERE  orders.salesman_id = salesman.salesman_id 
+	GROUP  BY orders.ord_date 
+	UNION 
+	SELECT salesman.salesman_id,salesman.NAME,orders.ord_date,orders.ord_no, 
+	       Min(orders.purch_amt) 
+	FROM   clt6.salesman,clt6.orders 
+	WHERE  orders.salesman_id = salesman.salesman_id 
+	GROUP  BY orders.ord_date 
+	ORDER  BY ord_no 
  
-
-6
-SELECT salesman.salesman_id,salesman.NAME 
-FROM   clt6.salesman,clt6.customer 
-WHERE  customer.salesman_id = salesman.salesman_id 
-       AND salesman.city != customer.city 
-UNION 
-SELECT salesman.salesman_id,salesman.NAME 
-FROM   clt6.salesman,clt6.customer 
-WHERE  customer.salesman_id = salesman.salesman_id 
-       AND salesman.city = customer.city 
+6. Write a query to list all the salesmen, and indicate those who do not have customers
+	in their cities, as well as whose who do. [ refer salesman and customer ]
+	SELECT salesman.salesman_id,salesman.NAME 
+	FROM   clt6.salesman,clt6.customer 
+	WHERE  customer.salesman_id = salesman.salesman_id 
+	       AND salesman.city != customer.city 
+	UNION 
+	SELECT salesman.salesman_id,salesman.NAME 
+	FROM   clt6.salesman,clt6.customer 
+	WHERE  customer.salesman_id = salesman.salesman_id 
+	       AND salesman.city = customer.city 
  
