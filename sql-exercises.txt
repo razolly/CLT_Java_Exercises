@@ -1,11 +1,31 @@
-SQL Exercise
-1
-	SELECT * FROM salesman;
-2
-	SELECT name, commission FROM salesman;
-3
-	SELECT name, city FROM salesman WHERE city = 'Paris';
-4
+ ________  ________  ___          
+|\   ____\|\   __  \|\  \         
+\ \  \___|\ \  \|\  \ \  \        
+ \ \_____  \ \  \\\  \ \  \       
+  \|____|\  \ \  \\\  \ \  \____  
+    ____\_\  \ \_____  \ \_______\
+   |\_________\|___| \__\|_______|
+   \|_________|     \|__|         
+                        
+Exercise 1
+
+1. Write a SQL statement to display all the information of all salesmen.
+	SELECT * 
+	FROM   salesman;
+	
+2. Write a SQL statement to display specific columns like name and commission for all the salesman
+	SELECT NAME, 
+	       commission 
+	FROM   salesman;
+	
+3.  Write a SQL statement to display names and city of salesman, who belongs to the city of Paris
+	SELECT NAME, 
+	       city 
+	FROM   salesman 
+	WHERE  city = 'Paris';
+	
+4. Write a SQL statement to display salesman id, name, city and commission who gets the commission 
+	within the range more than 0.10% and less than 0.12%
 	SELECT salesman_id, 
 	       NAME, 
 	       city, 
@@ -13,30 +33,46 @@ SQL Exercise
 	FROM   salesman 
 	WHERE  commission > 0.10 
 	       AND commission < 0.12; 
-5 
+	       
+5. Write a SQL Statement to find those salesmen with all information who come from
+	the city either Paris or Rome.
 	SELECT * 
 	FROM   salesman 
 	WHERE  city IN ( 'Paris', 'Rome' ); 
+	
 6
-
-7
+	???
+	
+7.  Write a query to filter those salesmen with all information who likes to leave other
+	cities than Paris and Rome.
 	SELECT * 
 	FROM   salesman 
 	WHERE  city NOT LIKE 'Paris' 
 	       AND city NOT LIKE 'Rome'; 
-8
+	       
+8. Write a SQL statement to find those salesmen with all information who gets the
+	commission within a range of 0.12 and 0.14
 	SELECT * 
 	FROM   salesman 
 	WHERE  commission BETWEEN 0.12 AND 0.14; 
-9
+	
+9. Write a SQL statement to find those salesmen with all other information and 
+	name started with any latter within Aand 'K'.
 	SELECT * FROM salesman WHERE name LIKE ‘[A-K]%’;
 	DOESNT WORK
-10
+	
+10. Write a SQL statement to find those salesmen with all other information and name
+	started with other than any latter within A and 'L
 	SELECT * FROM salesman WHERE name NOT LIKE ‘[A-L]%’;
 	NOT WORKING
-11
+	
+11.  Write a SQL statement to find those salesmen with all information whose name
+	containing the 1st character is 'N' and the 4th character island rests may be any
+	character
 	SELECT * FROM salesman WHERE name LIKE ‘N__L%’;
-12
+	
+12. Write a SQL statement to display the commission with the percent sign (%) with
+	salesman ID, name and city columns for all the salesmen.
 	SELECT Concat(commission, ‘%’) AS commission, 
 	       salesman_id, 
 	       NAME, 
@@ -44,51 +80,90 @@ SQL Exercise
 	FROM   salesman; 
 
 Exercise 2
-1
-	SELECT ord_date, salesman_id, ord_no, purch_amt FROM orders;
-2
-	SELECT DISTINCT salesman_id, ord_no FROM orders;
-	NOT WORKING
-3
-	SELECT ord_no, ord_date, purch_amt FROM orders WHERE salesman_id = 5001;
-4
+
+1. Write a query to display the columns in a specific order like order date,
+	salesman id, order number and purchase amount from for all the orders
+	SELECT ord_date, 
+	       salesman_id, 
+	       ord_no, 
+	       purch_amt 
+	FROM   orders;
+	
+2.	Write a query which will retrieve the value of salesman id of all salesmen, getting
+	orders from the customers in orders table without any repeats
+	SELECT DISTINCT salesman_id, 
+	                ord_no 
+	FROM            orders;
+	NOT working 
+	
+3. Write a SQL query to display the order number followed by order date and the
+	purchase amount for each order which will be delivered by the salesman who is
+	holding the ID 5001
+	SELECT ord_no, 
+	       ord_date, 
+	       purch_amt 
+	FROM   orders 
+	WHERE  salesman_id = 5001;
+
+4. Write a SQL statement to display either those orders which are not issued on date
+	2012-09-10 and issued by the salesman whose ID is 505 and below or those orders
+	which purchase amount is 1000.00 and below.
 	SELECT * 
 	FROM   orders 
 	WHERE  ( ord_date != '2012-09-10' 
 	         AND salesman_id < 5005 ) 
 	        OR purch_amt < 1000; 
-5
+
+5. Write a SQL query to display all orders where purchase amount less than a specified
+	amount or order date and customer_id must not be greater than a specified data
+	and less than a specified ID respectively
 	SELECT * FROM clt6.orders WHERE purch_amt < 1000
 	SELECT * FROM clt6.orders WHERE ord_date < '2012-10-01';
 	SELECT * FROM clt6.orders WHERE customer_id BETWEEN 3003 AND 3007;
-6
+
+6. Display all in reverse, where order dates equal to a specified date or customer id
+	greater than a specified number and purchase amount less than a specified amount.	
 	SELECT * 
 	FROM   orders 
 	WHERE  ord_date = '2012-10-05' 
 	        OR customer_id > 3005 
 	           AND purch_amt < 1000 
 	ORDER  BY ord_no DESC; 
-7
+	
+7. Write a SQL query to display order number, purchase amount, archived, the
+	unachieved percentage for those order which exceeds the 50% of the target value of 6000
 	??
 	??
-8
+
+8. Write a query to filter all those orders with all information which purchase amount
+	value is within the range 500 and 4000 except those orders of purchase amount
+	value 948.50 and 1983.43
 	SELECT * 
 	FROM   orders 
 	WHERE  purch_amt BETWEEN 500 AND 4000 
 	       AND purch_amt NOT IN ( 948.5, 1983.43 ); 
-9
-	SELECT SUM(purch_amt) FROM clt6.orders;
-10 
-	SELECT AVG(purch_amt) FROM clt6.orders;
-11
-	SELECT COUNT(salesman_id) FROM clt6.orders;
+
+9. Write a SQL statement to find the total purchase amount of all orders
+	SELECT Sum(purch_amt) 
+	FROM   clt6.orders;
+
+10. Write a SQL statement to find the average purchase amount of all orders
+	SELECT Avg(purch_amt) 
+	FROM   clt6.orders;
+
+11. Write a SQL statement to find the number of salesmen currently listing for all of their
+	customers.
+	SELECT Count(salesman_id) 
+	FROM   clt6.orders;
 12
-	SELECT MAX(purch_amt) FROM clt6.orders;
+	SELECT Max(purch_amt) 
+	FROM   clt6.orders;
 13
-	SELECT MIN(purch_amt) FROM clt6.orders;
+	SELECT Min(purch_amt) 
+	FROM   clt6.orders;
 14
 	SELECT customer_id, 
-       Max(purch_amt) 
+      	   Max(purch_amt) 
 	FROM   clt6.orders 
 	GROUP  BY customer_id; 
 15
@@ -99,9 +174,17 @@ Exercise 2
 	WHERE  ord_date = '2012-09-10' 
 	ORDER  BY purch_amt DESC; 
 16
-SELECT MAX(purch_amt), salesman_id FROM clt6.orders WHERE ord_date = '2012-08-17';
+	SELECT Max(purch_amt), 
+	       salesman_id 
+	FROM   clt6.orders 
+	WHERE  ord_date = '2012-08-17'; 
 17
-SELECT customer_id, MAX(purch_amt), ord_date FROM clt6.orders WHERE purch_amt > 2000 GROUP BY customer_id;
+	SELECT customer_id, 
+	       Max(purch_amt), 
+	       ord_date 
+	FROM   clt6.orders 
+	WHERE  purch_amt > 2000 
+	GROUP  BY customer_id; 
 18
 	SELECT customer_id, 
 	       Max(purch_amt), 
@@ -119,90 +202,121 @@ SELECT customer_id, MAX(purch_amt), ord_date FROM clt6.orders WHERE purch_amt > 
 	        OR ( purch_amt BETWEEN 5760 AND 6000 ) 
 	GROUP  BY customer_id; 
 20
-SELECT customer_id, MAX(purch_amt) FROM clt6.orders WHERE customer_id BETWEEN 3002 AND 3007 GROUP BY customer_id;
+	SELECT customer_id, 
+	       Max(purch_amt) 
+	FROM   clt6.orders 
+	WHERE  customer_id BETWEEN 3002 AND 3007 
+	GROUP  BY customer_id; 	
 21
-SELECT customer_id, purch_amt FROM clt6.orders WHERE customer_id BETWEEN 3002 AND 3007 AND purch_amt > 1000 GROUP BY customer_id;
+	SELECT customer_id, 
+	       purch_amt 
+	FROM   clt6.orders 
+	WHERE  customer_id BETWEEN 3002 AND 3007 
+	       AND purch_amt > 1000 
+	GROUP  BY customer_id; 
 22
-SELECT salesman_id, MAX(purch_amt) FROM clt6.orders WHERE salesman_id BETWEEN 5003 AND 5008 GROUP BY purch_amt;
+	SELECT salesman_id, 
+	       Max(purch_amt) 
+	FROM   clt6.orders 
+	WHERE  salesman_id BETWEEN 5003 AND 5008 
+	GROUP  BY purch_amt; 
 23
-SELECT COUNT(ord_date) FROM clt6.orders WHERE ord_date = '2012-08-17';
+	SELECT Count(ord_date) 
+	FROM   clt6.orders 
+	WHERE  ord_date = '2012-08-17';
 24
-SELECT COUNT(salesman_id) FROM clt6.orders WHERE salesman_id IS NOT NULL;
-Paper said to count CITY?
+	SELECT Count(salesman_id) 
+	FROM   clt6.orders 
+	WHERE  salesman_id IS NOT NULL;Paper said TO count city? 
 25
-SELECT ord_date, COUNT(salesman_id) FROM clt6.orders GROUP BY ord_date;
+	SELECT   ord_date, 
+	         Count(salesman_id) 
+	FROM     clt6.orders 
+	GROUP BY ord_date;
 26
-SELECT Concat('For ', order_date, ' there were ', order_count, ' orders') AS 
-       'Order Count' 
-FROM   (SELECT ord_date      AS order_date, 
-               Count(ord_no) AS order_count 
-        FROM   clt6.orders 
-        GROUP  BY ord_date) AS SUBQUERY 
+	SELECT Concat('For ', order_date, ' there were ', order_count, ' orders') AS 
+	       'Order Count' 
+	FROM   (SELECT ord_date      AS order_date, 
+	               Count(ord_no) AS order_count 
+	        FROM   clt6.orders 
+	        GROUP  BY ord_date) AS SUBQUERY 
 27
-SELECT * FROM clt6.orders ORDER BY ord_no;
+	SELECT   * 
+	FROM     clt6.orders 
+	ORDER BY ord_no;
 28
-SELECT * FROM clt6.orders ORDER BY ord_date DESC;
+	SELECT   * 
+	FROM     clt6.orders 
+	ORDER BY ord_date DESC;
 29
-SELECT * FROM clt6.orders ORDER BY ord_date, purch_amt DESC;
+	SELECT   * 
+	FROM     clt6.orders 
+	ORDER BY ord_date, 
+	         purch_amt DESC;
 30
-SELECT salesman_id    AS 'Salesman ID', 
-       ord_date       AS 'Order Date', 
-       Max(purch_amt) AS 'Max Purchase Amount' 
-FROM   clt6.orders 
-GROUP  BY ord_date 
-ORDER  BY salesman_id, 
-          ord_date; 
+	SELECT   salesman_id    AS 'Salesman ID', 
+	         ord_date       AS 'Order Date', 
+	         Max(purch_amt) AS 'Max Purchase Amount' 
+	FROM     clt6.orders 
+	GROUP BY ord_date 
+	ORDER BY salesman_id, 
+	         ord_date;
 31
-SELECT customer_id        AS 'Customer ID', 
-       Count(customer_id) AS 'Number of Orders', 
-       Max(purch_amt)     AS 'Biggest Purchase' 
-FROM   clt6.orders 
-GROUP  BY customer_id; 
+	SELECT   customer_id        AS 'Customer ID', 
+	         Count(customer_id) AS 'Number of Orders', 
+	         Max(purch_amt)     AS 'Biggest Purchase' 
+	FROM     clt6.orders 
+	GROUP BY customer_id;
  
 
 
 Exercise - Customer table
 1
-SELECT * FROM clt6.customer WHERE grade = 200;
- 
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  grade = 200;
 2
-SELECT * FROM clt6.customer WHERE grade > 100;
- 
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  grade > 100;
 3
-SELECT * FROM clt6.customer 
-WHERE city = 'New York'
-AND grade > 100;
- 
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  city = 'New York' 
+	AND    grade > 100;
 4
-SELECT * FROM clt6.customer 
-WHERE city = 'New York'
-OR grade > 100;
- 
-5 
-SELECT * FROM clt6.customer 
-WHERE city = 'New York'
-OR NOT grade > 100;
- 
-6 
-SELECT * FROM clt6.customer 
-WHERE NOT (city = 'New York' OR grade > 100);
- 
-
-
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  city = 'New York' 
+	OR     grade > 100;
+5
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  city = 'New York' 
+	OR     NOT grade > 100;
+6
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  NOT ( 
+	              city = 'New York' 
+	       OR     grade > 100);
 7
-SELECT * FROM clt6.customer 
-WHERE customer_id IN (3007, 3008, 3009);
- 
-8 
-SELECT * FROM clt6.customer 
-WHERE grade IS NULL;
- 
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  customer_id IN (3007, 
+	                       3008, 
+	                       3009);
+8
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  grade IS NULL;
 9
-SELECT * FROM clt6.customer 
-WHERE grade IS NOT NULL;
- 
+	SELECT * 
+	FROM   clt6.customer 
+	WHERE  grade IS NOT NULL;
 10
-SELECT COUNT(cust_name) FROM clt6.customer;
+	SELECT Count(cust_name) 
+	FROM   clt6.customer;
  
 11
 Not sure what grade to look for
