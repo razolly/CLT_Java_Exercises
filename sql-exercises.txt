@@ -7,6 +7,9 @@
    |\_________\|___| \__\|_______|
    \|_________|     \|__|         
                         
+Worksheet Images:
+https://imgur.com/a/YkXmkdS
+
 Exercise 1
 
 1. Write a SQL statement to display all the information of all salesmen.
