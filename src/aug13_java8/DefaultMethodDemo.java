@@ -51,7 +51,7 @@ public class DefaultMethodDemo {
 	public static void main(String[] args) {
 		
 		new ServiceImpl().welcome();
-		ServiceImpl.goodbye();
+		Service.goodbye();
 	}
 
 }
