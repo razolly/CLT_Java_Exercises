@@ -7,31 +7,31 @@
    |\_________\|___| \__\|_______|
    \|_________|     \|__|         
                         
-Worksheet Images:
-https://imgur.com/a/YkXmkdS
+--Worksheet Images:
+--https://imgur.com/a/YkXmkdS
 
-Exercise 1
+--Exercise 1
 
-1. Write a SQL statement to display all the information of all salesmen.
+--1. Write a SQL statement to display all the information of all salesmen.
 
 	SELECT * 
 	FROM   salesman;
 	
-2. Write a SQL statement to display specific columns like name and commission for all the salesman
+--2. Write a SQL statement to display specific columns like name and commission for all the salesman
 
 	SELECT NAME, 
 	       commission 
 	FROM   salesman;
 	
-3.  Write a SQL statement to display names and city of salesman, who belongs to the city of Paris
+--3.  Write a SQL statement to display names and city of salesman, who belongs to the city of Paris
 
 	SELECT NAME, 
 	       city 
 	FROM   salesman 
 	WHERE  city = 'Paris';
 	
-4. Write a SQL statement to display salesman id, name, city and commission who gets the commission 
-	within the range more than 0.10% and less than 0.12%
+--4. Write a SQL statement to display salesman id, name, city and commission who gets the commission 
+--	within the range more than 0.10% and less than 0.12%
 	
 	SELECT salesman_id, 
 	       NAME, 
@@ -41,8 +41,8 @@ Exercise 1
 	WHERE  commission > 0.10 
 	       AND commission < 0.12; 
 	       
-5. Write a SQL Statement to find those salesmen with all information who come from
-	the city either Paris or Rome.
+--5. Write a SQL Statement to find those salesmen with all information who come from
+--	the city either Paris or Rome.
 	
 	SELECT * 
 	FROM   salesman 
